@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: #eef3f7;
   color: #17212b;
 }
@@ -64,17 +64,6 @@ header p {
   color: #176b8f;
 }
 
-.big-value {
-  font-size: 38px;
-  font-weight: 700;
-  color: #073b5c;
-}
-
-.small {
-  color: #63727d;
-  font-size: 14px;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -91,6 +80,11 @@ header p {
   display: block;
   font-size: 20px;
   margin-top: 4px;
+}
+
+.small {
+  color: #63727d;
+  font-size: 14px;
 }
 
 .table-wrap {
@@ -133,7 +127,7 @@ tr:nth-child(even) {
   overflow-x: auto;
 }
 
-canvas {
+#waterChart {
   display: block;
   width: 100%;
   height: 360px;
@@ -155,16 +149,13 @@ footer {
 }
 
 @media (max-width: 600px) {
+
   header h1 {
     font-size: 22px;
   }
 
-  .big-value {
-    font-size: 32px;
-  }
-
-  canvas {
-    height: 330px;
+  #waterChart {
+    height: 350px;
   }
 }
 </style>
@@ -182,6 +173,7 @@ footer {
 <main class="container">
 
   <section class="card">
+
     <div class="status status-neutral">
       🌊 Wasserstand wird überwacht
     </div>
@@ -204,21 +196,26 @@ footer {
       </div>
 
     </div>
+
   </section>
 
 
   <section class="card">
-    <h2>14-Tage-Wasserstandsprognose</h2>
+
+    <h2>Kurzfristige Wasserstandsprognose bis 14 Tage</h2>
 
     <p class="small">
-      Kurzfristige Werte werden bevorzugt aus den offiziellen
-      PEGELONLINE-Prognosen übernommen. Für den weiteren Zeitraum
-      werden Pegeltrend, Oberlieger, Wetter und Niederschlag berücksichtigt.
-      Mit zunehmender Entfernung steigt die Unsicherheit.
+      Die ersten Tage berücksichtigen bevorzugt die offizielle
+      PEGELONLINE-Prognose. Zusätzlich werden lokale Pegelentwicklung,
+      Oberlieger, zeitverzögerte Wasserbewegungen sowie Wetter und
+      Niederschlag berücksichtigt. Mit zunehmender Vorhersagedauer
+      steigt die Unsicherheit.
     </p>
 
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Datum</th>
@@ -228,42 +225,48 @@ footer {
           </tr>
         </thead>
 
-        <tbody id="forecastTable">
-        </tbody>
+        <tbody id="forecastTable"></tbody>
+
       </table>
+
     </div>
+
   </section>
 
 
   <section class="card">
+
     <h2>Wasserstandskurve – 14 Tage</h2>
 
     <p class="small">
-      Verlauf des erwarteten Wasserstands am Pegel Oberwinter.
-      Die Kurve verwendet exakt dieselben 14 Tageswerte wie die Tabelle.
+      Erwartete Entwicklung des Wasserstands am Pegel Oberwinter.
+      Das Diagramm zeigt dieselben 14 Tageswerte wie die Tabelle.
     </p>
 
     <div class="chart-wrapper">
       <canvas id="waterChart"></canvas>
     </div>
+
   </section>
 
 
   <section class="card">
+
     <h2>Oberlieger Rhein</h2>
 
-    <div class="grid" id="gauges">
-    </div>
+    <div class="grid" id="gauges"></div>
+
   </section>
 
 
   <section class="card">
-    <h2>Wetter und Niederschlag</h2>
+
+    <h2>Aktuelles Wetter</h2>
 
     <div class="grid">
 
       <div class="metric">
-        <div class="small">Aktuelle Temperatur</div>
+        <div class="small">Temperatur</div>
         <strong id="temperature">–</strong>
       </div>
 
@@ -283,14 +286,18 @@ footer {
       </div>
 
     </div>
+
   </section>
 
 
   <section class="card">
-    <h2>Wetterentwicklung</h2>
+
+    <h2>7-Tage-Wetterentwicklung</h2>
 
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Datum</th>
@@ -299,14 +306,17 @@ footer {
           </tr>
         </thead>
 
-        <tbody id="weatherTable">
-        </tbody>
+        <tbody id="weatherTable"></tbody>
+
       </table>
+
     </div>
+
   </section>
 
 
   <section class="card">
+
     <h2>Einflussfaktoren</h2>
 
     <div class="grid">
@@ -332,49 +342,48 @@ footer {
       </div>
 
     </div>
+
   </section>
 
 
   <section class="card">
-    <h2>Hinweise zur Prognose</h2>
+
+    <h2>Wetter- und Niederschlagseinfluss</h2>
 
     <p class="small">
-      Die Wasserstandsentwicklung eines großen Flusses wird nicht allein
-      durch den Niederschlag am Zielort bestimmt. Berücksichtigt werden
-      insbesondere die aktuelle Entwicklung am Pegel Oberwinter,
-      die Entwicklung der Oberlieger sowie die zeitverzögerte
-      Wasserbewegung entlang des Rheins.
+      Für die Einschätzung werden nicht nur die Wetterdaten direkt am
+      Fährstandort betrachtet. Einbezogen werden mehrere Regionen entlang
+      des relevanten Rheineinzugsgebiets. Niederschlag wird dabei nicht
+      einfach in Zentimeter Pegelanstieg umgerechnet, sondern nur als
+      zusätzlicher Einflussfaktor des Trendmodells verwendet.
     </p>
 
     <p class="small">
-      Zusätzlich wird die Wetter- und Niederschlagsentwicklung in mehreren
-      relevanten Regionen berücksichtigt. Dazu gehören unter anderem
-      Bereiche am Oberrhein sowie Einzugsgebiete von Neckar, Main und Mosel.
+      Für längere Zeiträume sind insbesondere großräumige Wetterlagen,
+      Niederschlagsentwicklung und die Entwicklung der Oberlieger relevant.
+      Deshalb wird für die späteren Tage bewusst keine scheinbare
+      Genauigkeit vorgetäuscht.
     </p>
 
-    <p class="small">
-      Die Vorhersage für die ersten Tage ist deshalb belastbarer als eine
-      Aussage für den Zeitraum von einer bis zwei Wochen. Für den späteren
-      Zeitraum werden keine künstlich präzisen Werte erzeugt, wenn keine
-      ausreichende Datengrundlage vorhanden ist.
-    </p>
   </section>
 
 
   <section class="card">
+
     <h2>Quellen</h2>
 
     <div class="source">
       PEGELONLINE / Wasserstraßen- und Schifffahrtsverwaltung des Bundes<br>
       Open-Meteo Wetterdaten<br>
-      Rheinpegel Oberlieger und aktuelle Messwerte
+      Pegelmessstellen am Rhein
     </div>
+
   </section>
 
 </main>
 
 <footer>
-  Automatische Aktualisierung der Daten
+  Automatische Aktualisierung alle 15 Minuten
 </footer>
 
 
@@ -383,45 +392,62 @@ footer {
 const API =
 "https://pegelonline.wsv.de/webservices/rest-api/v2";
 
+
+/*
+----------------------------------------------------
+Wetterpunkte
+----------------------------------------------------
+*/
+
 const WEATHER_POINTS = [
+
   {
     name: "Oberwinter",
     lat: 50.615,
     lon: 7.207
   },
+
   {
     name: "Maxau",
     lat: 49.035,
     lon: 8.314
   },
+
   {
     name: "Mannheim",
     lat: 49.489,
     lon: 8.467
   },
+
   {
     name: "Mainz",
     lat: 50.005,
     lon: 8.259
   },
+
   {
     name: "Neckar",
     lat: 48.775,
     lon: 9.182
   },
+
   {
     name: "Main",
     lat: 50.110,
     lon: 8.682
   },
+
   {
     name: "Mosel",
     lat: 49.750,
     lon: 6.640
   }
+
 ];
 
+
 const GAUGE_NAMES = [
+
   "MAXAU",
   "MANNHEIM",
   "MAINZ",
@@ -429,15 +455,18 @@ const GAUGE_NAMES = [
   "KOBLENZ",
   "ANDERNACH",
   "OBERWINTER"
+
 ];
+
 
 let stations = [];
 let gaugeData = {};
 let weatherData = null;
 
+
 /*
 ----------------------------------------------------
-Hilfsfunktionen
+Datumsformat
 ----------------------------------------------------
 */
 
@@ -451,36 +480,38 @@ function formatDate(date) {
       month: "2-digit"
     }
   );
+
 }
 
 
-function formatLongDate(date) {
-
-  return date.toLocaleDateString(
-    "de-DE",
-    {
-      weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric"
-    }
-  );
-}
-
+/*
+----------------------------------------------------
+Zahl formatieren
+----------------------------------------------------
+*/
 
 function formatNumber(value) {
 
   if (
     value === null ||
     value === undefined ||
-    Number.isNaN(value)
+    Number.isNaN(Number(value))
   ) {
+
     return "–";
+
   }
 
   return Number(value).toFixed(1);
+
 }
 
+
+/*
+----------------------------------------------------
+Begrenzung
+----------------------------------------------------
+*/
 
 function clamp(value, min, max) {
 
@@ -488,6 +519,7 @@ function clamp(value, min, max) {
     min,
     Math.min(max, value)
   );
+
 }
 
 
@@ -499,11 +531,14 @@ Stationen laden
 
 async function loadStations() {
 
-  const response = await fetch(
-    API + "/stations.json?waters=RHEIN"
-  );
+  const response =
+    await fetch(
+      API +
+      "/stations.json?waters=RHEIN"
+    );
 
-  stations = await response.json();
+  stations =
+    await response.json();
 
 }
 
@@ -527,18 +562,19 @@ function findStation(name) {
 
 /*
 ----------------------------------------------------
-Aktueller Pegel
+Aktueller Wasserstand
 ----------------------------------------------------
 */
 
 async function currentGauge(station) {
 
-  const response = await fetch(
-    API +
-    "/stations/" +
-    station.uuid +
-    "/W/measurements.json?start=P2D"
-  );
+  const response =
+    await fetch(
+      API +
+      "/stations/" +
+      station.uuid +
+      "/W/measurements.json?start=P2D"
+    );
 
   return await response.json();
 
@@ -547,18 +583,19 @@ async function currentGauge(station) {
 
 /*
 ----------------------------------------------------
-Historie
+7-Tage-Historie
 ----------------------------------------------------
 */
 
 async function historyGauge(station) {
 
-  const response = await fetch(
-    API +
-    "/stations/" +
-    station.uuid +
-    "/W/measurements.json?start=P7D"
-  );
+  const response =
+    await fetch(
+      API +
+      "/stations/" +
+      station.uuid +
+      "/W/measurements.json?start=P7D"
+    );
 
   return await response.json();
 
@@ -567,7 +604,7 @@ async function historyGauge(station) {
 
 /*
 ----------------------------------------------------
-Offizielle Prognose
+Offizielle PEGELONLINE-Prognose
 ----------------------------------------------------
 */
 
@@ -575,12 +612,13 @@ async function officialForecast(station) {
 
   try {
 
-    const response = await fetch(
-      API +
-      "/stations/" +
-      station.uuid +
-      "/WV/measurements.json"
-    );
+    const response =
+      await fetch(
+        API +
+        "/stations/" +
+        station.uuid +
+        "/WV/measurements.json"
+      );
 
     if (!response.ok) {
       return [];
@@ -588,7 +626,9 @@ async function officialForecast(station) {
 
     return await response.json();
 
-  } catch (error) {
+  }
+
+  catch(error) {
 
     console.log(
       "Keine offizielle Prognose:",
@@ -596,6 +636,7 @@ async function officialForecast(station) {
     );
 
     return [];
+
   }
 
 }
@@ -603,13 +644,16 @@ async function officialForecast(station) {
 
 /*
 ----------------------------------------------------
-Trend berechnen
+Trend
 ----------------------------------------------------
 */
 
 function trend(data) {
 
-  if (!data || data.length < 2) {
+  if (
+    !data ||
+    data.length < 2
+  ) {
 
     return {
       slope: 0,
@@ -622,13 +666,21 @@ function trend(data) {
     Number(data[0].value);
 
   const last =
-    Number(data[data.length - 1].value);
+    Number(
+      data[data.length - 1].value
+    );
 
   const slope =
-    (last - first) /
-    Math.max(1, data.length - 1);
+    (
+      last - first
+    ) /
+    Math.max(
+      1,
+      data.length - 1
+    );
 
-  let text = "seitwärts";
+  let text =
+    "seitwärts";
 
   if (slope > 0.8) {
     text = "steigend";
@@ -648,7 +700,7 @@ function trend(data) {
 
 /*
 ----------------------------------------------------
-Wetter
+Wetterpunkt
 ----------------------------------------------------
 */
 
@@ -671,6 +723,12 @@ async function weatherPoint(point) {
 }
 
 
+/*
+----------------------------------------------------
+Wetter laden
+----------------------------------------------------
+*/
+
 async function loadWeather() {
 
   const results = [];
@@ -689,7 +747,9 @@ async function loadWeather() {
         data
       });
 
-    } catch (error) {
+    }
+
+    catch(error) {
 
       console.log(
         "Wetterfehler:",
@@ -701,21 +761,27 @@ async function loadWeather() {
 
   }
 
-  weatherData = results;
+  weatherData =
+    results;
 
 }
 
 
 /*
 ----------------------------------------------------
-Niederschlag auswerten
+Niederschlag
 ----------------------------------------------------
 */
 
 function rainFactor(dayIndex) {
 
-  if (!weatherData || !weatherData.length) {
+  if (
+    !weatherData ||
+    !weatherData.length
+  ) {
+
     return 0;
+
   }
 
   let total = 0;
@@ -749,12 +815,6 @@ function rainFactor(dayIndex) {
   const average =
     total / count;
 
-  /*
-    Kein direkter mm -> cm Pegelansatz.
-    Niederschlag wird nur als schwacher
-    zusätzlicher Modellfaktor verwendet.
-  */
-
   return clamp(
     average / 20,
     -1,
@@ -773,21 +833,25 @@ Oberlieger-Signal
 function upstreamSignal() {
 
   const names = [
+
     "MAXAU",
     "MANNHEIM",
     "MAINZ",
     "KAUB",
     "KOBLENZ",
     "ANDERNACH"
+
   ];
 
   const weights = {
+
     MAXAU: 0.05,
     MANNHEIM: 0.08,
     MAINZ: 0.13,
     KAUB: 0.18,
     KOBLENZ: 0.25,
     ANDERNACH: 0.31
+
   };
 
   let signal = 0;
@@ -799,7 +863,9 @@ function upstreamSignal() {
       !gaugeData[name] ||
       !gaugeData[name].history
     ) {
+
       return;
+
     }
 
     const t =
@@ -813,7 +879,8 @@ function upstreamSignal() {
     signal +=
       t.slope * weight;
 
-    totalWeight += weight;
+    totalWeight +=
+      weight;
 
   });
 
@@ -821,14 +888,17 @@ function upstreamSignal() {
     return 0;
   }
 
-  return signal / totalWeight;
+  return (
+    signal /
+    totalWeight
+  );
 
 }
 
 
 /*
 ----------------------------------------------------
-14 Tage erzeugen
+14 Kalendertage
 ----------------------------------------------------
 */
 
@@ -870,7 +940,7 @@ function makeDays() {
 
 /*
 ----------------------------------------------------
-Offiziellen Forecast nach Datum suchen
+Offizielle Prognose für Datum
 ----------------------------------------------------
 */
 
@@ -879,8 +949,13 @@ function officialForDate(
   forecast
 ) {
 
-  if (!forecast || !forecast.length) {
+  if (
+    !forecast ||
+    !forecast.length
+  ) {
+
     return null;
+
   }
 
   let best = null;
@@ -901,19 +976,19 @@ function officialForDate(
         date.getTime()
       );
 
-    if (diff < bestDiff) {
+    if (
+      diff < bestDiff
+    ) {
 
-      bestDiff = diff;
-      best = item;
+      bestDiff =
+        diff;
+
+      best =
+        item;
 
     }
 
   });
-
-  /*
-    Nur verwenden, wenn der Forecast
-    zeitlich nicht völlig danebenliegt.
-  */
 
   if (
     best &&
@@ -921,7 +996,9 @@ function officialForDate(
     36 * 60 * 60 * 1000
   ) {
 
-    return Number(best.value);
+    return Number(
+      best.value
+    );
 
   }
 
@@ -932,7 +1009,7 @@ function officialForDate(
 
 /*
 ----------------------------------------------------
-Eigenes Modell
+Eigenes Trendmodell
 ----------------------------------------------------
 */
 
@@ -943,52 +1020,53 @@ function ownModel(
   upstreamTrend
 ) {
 
-  /*
-    Mit zunehmender Entfernung wird
-    der eigene Trend vorsichtiger.
-  */
-
   let damping = 1;
 
   if (dayIndex <= 2) {
+
     damping = 0.75;
+
   }
 
   else if (dayIndex <= 6) {
+
     damping = 0.40;
+
   }
 
   else {
+
     damping = 0.18;
+
   }
 
   const rain =
     rainFactor(dayIndex);
 
-  /*
-    Niederschlag wird absichtlich
-    sehr vorsichtig gewichtet.
-  */
-
   const movement =
     (
       localTrend * 0.35 +
       upstreamTrend * 0.65
-    ) * damping;
+    ) *
+    damping;
 
   const rainEffect =
-    rain * 0.8 * damping;
+    rain *
+    0.8 *
+    damping;
 
-  return base +
+  return (
+    base +
     movement * dayIndex +
-    rainEffect * dayIndex;
+    rainEffect * dayIndex
+  );
 
 }
 
 
 /*
 ----------------------------------------------------
-Tagesprognose
+14-Tage-Prognose erzeugen
 ----------------------------------------------------
 */
 
@@ -1006,9 +1084,9 @@ function buildForecastDay(
   const upstream =
     upstreamSignal();
 
-  let value = null;
-  let basis = "";
-  let uncertainty = "";
+  let value;
+  let basis;
+  let uncertainty;
 
   const officialValue =
     officialForDate(
@@ -1017,10 +1095,9 @@ function buildForecastDay(
     );
 
   /*
-    Priorität:
-    1. offizieller PEGELONLINE Forecast
-    2. eigenes Modell
-  */
+   * Offizielle Prognose hat Vorrang
+   * für die kurzfristige Vorhersage.
+   */
 
   if (
     officialValue !== null &&
@@ -1071,11 +1148,13 @@ function buildForecastDay(
   }
 
   return {
+
     date,
     index,
     value,
     basis,
     uncertainty
+
   };
 
 }
@@ -1083,7 +1162,7 @@ function buildForecastDay(
 
 /*
 ----------------------------------------------------
-Tabelle
+Prognosetabelle
 ----------------------------------------------------
 */
 
@@ -1104,6 +1183,7 @@ function renderForecastTable(
       document.createElement("tr");
 
     tr.innerHTML = `
+
       <td>
         <strong>
           ${formatDate(day.date)}
@@ -1121,6 +1201,7 @@ function renderForecastTable(
       <td class="confidence">
         ${day.uncertainty}
       </td>
+
     `;
 
     tbody.appendChild(tr);
@@ -1131,9 +1212,9 @@ function renderForecastTable(
 
 
 /*
-----------------------------------------------------
-14-Tage-Diagramm
-----------------------------------------------------
+====================================================
+14-TAGE-DIAGRAMM
+====================================================
 */
 
 function drawChart(
@@ -1179,45 +1260,61 @@ function drawChart(
     height
   );
 
+
   /*
-    WICHTIG:
-    Genau dieselben 14 Werte wie in
-    der Prognosetabelle.
-  */
+   * ENTSCHEIDEND:
+   *
+   * Es werden hier ausdrücklich
+   * die 14 Tageswerte verwendet.
+   */
+
+  const data =
+    forecastDays
+      .slice(0, 14)
+      .filter(day =>
+        day &&
+        day.value !== null &&
+        day.value !== undefined &&
+        !Number.isNaN(
+          Number(day.value)
+        )
+      );
+
+
+  if (!data.length) {
+    return;
+  }
+
 
   const values =
-    forecastDays.map(
+    data.map(
       day => Number(day.value)
     );
 
+
   const labels =
-    forecastDays.map(
+    data.map(
       day => formatDate(day.date)
     );
 
-  if (
-    values.length !== 14
-  ) {
-    console.warn(
-      "Diagramm erwartet 14 Werte, erhalten:",
-      values.length
-    );
-  }
 
   const paddingLeft = 55;
   const paddingRight = 20;
   const paddingTop = 25;
-  const paddingBottom = 55;
+  const paddingBottom = 70;
+
 
   const chartWidth =
     width -
     paddingLeft -
     paddingRight;
 
+
   const chartHeight =
     height -
     paddingTop -
     paddingBottom;
+
 
   let min =
     Math.min(...values);
@@ -1225,9 +1322,6 @@ function drawChart(
   let max =
     Math.max(...values);
 
-  /*
-    Etwas Luft oberhalb und unterhalb.
-  */
 
   const range =
     Math.max(
@@ -1235,12 +1329,17 @@ function drawChart(
       max - min
     );
 
-  min -= range * 0.15;
-  max += range * 0.15;
+
+  min -=
+    range * 0.15;
+
+  max +=
+    range * 0.15;
+
 
   /*
-    Hintergrund
-  */
+   * Hintergrund
+   */
 
   ctx.fillStyle =
     "#fbfcfd";
@@ -1252,16 +1351,19 @@ function drawChart(
     height
   );
 
+
   /*
-    Horizontale Hilfslinien
-  */
+   * Gitternetz
+   */
 
   ctx.strokeStyle =
     "#dfe6eb";
 
   ctx.lineWidth = 1;
 
+
   const gridLines = 5;
+
 
   for (
     let i = 0;
@@ -1273,6 +1375,7 @@ function drawChart(
       paddingTop +
       chartHeight *
       (i / gridLines);
+
 
     ctx.beginPath();
 
@@ -1288,10 +1391,12 @@ function drawChart(
 
     ctx.stroke();
 
-    const value =
+
+    const gridValue =
       max -
       (max - min) *
       (i / gridLines);
+
 
     ctx.fillStyle =
       "#63727d";
@@ -1302,49 +1407,55 @@ function drawChart(
     ctx.textAlign =
       "right";
 
+
     ctx.fillText(
-      value.toFixed(0),
+      gridValue.toFixed(0),
       paddingLeft - 8,
       y + 4
     );
 
   }
 
-  /*
-    Punkte berechnen
-  */
-
-  const points = values.map(
-    (value, index) => {
-
-      const x =
-        paddingLeft +
-        chartWidth *
-        (
-          index /
-          (values.length - 1)
-        );
-
-      const y =
-        paddingTop +
-        chartHeight *
-        (
-          (max - value) /
-          (max - min)
-        );
-
-      return {
-        x,
-        y,
-        value
-      };
-
-    }
-  );
 
   /*
-    Fläche unter der Kurve
-  */
+   * 14 Punkte berechnen
+   */
+
+  const points =
+    values.map(
+      (value, index) => {
+
+        const x =
+          paddingLeft +
+          chartWidth *
+          (
+            index /
+            (values.length - 1)
+          );
+
+
+        const y =
+          paddingTop +
+          chartHeight *
+          (
+            (max - value) /
+            (max - min)
+          );
+
+
+        return {
+          x,
+          y,
+          value
+        };
+
+      }
+    );
+
+
+  /*
+   * Fläche unter der Kurve
+   */
 
   ctx.beginPath();
 
@@ -1352,6 +1463,7 @@ function drawChart(
     points[0].x,
     points[0].y
   );
+
 
   points.forEach(point => {
 
@@ -1362,30 +1474,34 @@ function drawChart(
 
   });
 
+
   ctx.lineTo(
     points[points.length - 1].x,
-    paddingTop +
-    chartHeight
+    paddingTop + chartHeight
   );
+
 
   ctx.lineTo(
     points[0].x,
-    paddingTop +
-    chartHeight
+    paddingTop + chartHeight
   );
 
+
   ctx.closePath();
+
 
   ctx.fillStyle =
     "rgba(13,99,142,0.10)";
 
   ctx.fill();
 
+
   /*
-    Kurve
-  */
+   * Kurve
+   */
 
   ctx.beginPath();
+
 
   points.forEach(
     (point, index) => {
@@ -1411,6 +1527,7 @@ function drawChart(
     }
   );
 
+
   ctx.strokeStyle =
     "#0d638e";
 
@@ -1418,9 +1535,10 @@ function drawChart(
 
   ctx.stroke();
 
+
   /*
-    Punkte
-  */
+   * Punkte
+   */
 
   points.forEach(point => {
 
@@ -1441,10 +1559,10 @@ function drawChart(
 
   });
 
+
   /*
-    X-Achsen-Beschriftung
-    Alle 14 Tage werden berücksichtigt.
-  */
+   * Datum unter jedem Punkt
+   */
 
   ctx.fillStyle =
     "#63727d";
@@ -1452,22 +1570,23 @@ function drawChart(
   ctx.font =
     "11px Arial";
 
-  ctx.textAlign =
-    "center";
 
   labels.forEach(
     (label, index) => {
 
-      /*
-        Bei 14 Tagen wird jede Beschriftung
-        dargestellt. Auf kleinen Displays
-        werden die Beschriftungen leicht gedreht.
-      */
-
       const point =
         points[index];
 
+
       ctx.save();
+
+
+      /*
+       * Auf kleinen Bildschirmen
+       * werden die Datumsangaben
+       * gedreht, damit alle 14
+       * angezeigt werden können.
+       */
 
       if (width < 700) {
 
@@ -1485,6 +1604,7 @@ function drawChart(
         ctx.textAlign =
           "right";
 
+
         ctx.fillText(
           label,
           0,
@@ -1494,6 +1614,10 @@ function drawChart(
       }
 
       else {
+
+        ctx.textAlign =
+          "center";
+
 
         ctx.fillText(
           label,
@@ -1505,16 +1629,19 @@ function drawChart(
 
       }
 
+
       ctx.restore();
 
     }
   );
 
+
   /*
-    Y-Achsen-Einheit
-  */
+   * Y-Achsenbeschriftung
+   */
 
   ctx.save();
+
 
   ctx.translate(
     14,
@@ -1522,9 +1649,11 @@ function drawChart(
     chartHeight / 2
   );
 
+
   ctx.rotate(
     -Math.PI / 2
   );
+
 
   ctx.textAlign =
     "center";
@@ -1532,11 +1661,16 @@ function drawChart(
   ctx.fillStyle =
     "#63727d";
 
+  ctx.font =
+    "12px Arial";
+
+
   ctx.fillText(
     "Wasserstand in cm",
     0,
     0
   );
+
 
   ctx.restore();
 
@@ -1545,7 +1679,7 @@ function drawChart(
 
 /*
 ----------------------------------------------------
-Pegel-Karten
+Oberlieger anzeigen
 ----------------------------------------------------
 */
 
@@ -1558,13 +1692,16 @@ function renderGauges() {
 
   container.innerHTML = "";
 
+
   [
+
     "MAXAU",
     "MANNHEIM",
     "MAINZ",
     "KAUB",
     "KOBLENZ",
     "ANDERNACH"
+
   ].forEach(name => {
 
     const data =
@@ -1574,31 +1711,43 @@ function renderGauges() {
       return;
     }
 
+
+    const current =
+      data.current || [];
+
+
     const latest =
-      data.current &&
-      data.current.length
-        ? data.current[
-            data.current.length - 1
+      current.length
+        ? current[
+            current.length - 1
           ]
         : null;
+
 
     const value =
       latest
         ? Number(latest.value)
         : null;
 
+
     const t =
-      trend(data.history);
+      trend(
+        data.history
+      );
+
 
     const div =
       document.createElement(
         "div"
       );
 
+
     div.className =
       "metric";
 
+
     div.innerHTML = `
+
       <div class="small">
         ${name}
       </div>
@@ -1610,9 +1759,13 @@ function renderGauges() {
       <div class="small">
         Trend: ${t.text}
       </div>
+
     `;
 
-    container.appendChild(div);
+
+    container.appendChild(
+      div
+    );
 
   });
 
@@ -1634,8 +1787,10 @@ function renderWeather() {
     return;
   }
 
+
   const first =
     weatherData[0].data;
+
 
   if (
     first.daily &&
@@ -1645,6 +1800,7 @@ function renderWeather() {
     document.getElementById(
       "temperature"
     ).textContent =
+
       formatNumber(
         first.daily.temperature_2m_max[0]
       ) +
@@ -1652,9 +1808,11 @@ function renderWeather() {
 
   }
 
+
   let rainToday = 0;
   let rain7 = 0;
   let rain14 = 0;
+
 
   weatherData.forEach(item => {
 
@@ -1663,59 +1821,82 @@ function renderWeather() {
       item.data.daily &&
       item.data.daily.precipitation_sum;
 
+
     if (!rain) {
       return;
     }
 
+
     rainToday +=
-      Number(rain[0] || 0);
+      Number(
+        rain[0] || 0
+      );
+
 
     for (
       let i = 0;
-      i < Math.min(7, rain.length);
+      i < Math.min(
+        7,
+        rain.length
+      );
       i++
     ) {
 
       rain7 +=
-        Number(rain[i] || 0);
+        Number(
+          rain[i] || 0
+        );
 
     }
 
+
     for (
       let i = 0;
-      i < Math.min(14, rain.length);
+      i < Math.min(
+        14,
+        rain.length
+      );
       i++
     ) {
 
       rain14 +=
-        Number(rain[i] || 0);
+        Number(
+          rain[i] || 0
+        );
 
     }
 
   });
 
+
   const count =
     weatherData.length;
+
 
   document.getElementById(
     "rainToday"
   ).textContent =
+
     formatNumber(
       rainToday / count
     ) +
     " mm";
 
+
   document.getElementById(
     "rain7"
   ).textContent =
+
     formatNumber(
       rain7 / count
     ) +
     " mm";
 
+
   document.getElementById(
     "rain14"
   ).textContent =
+
     formatNumber(
       rain14 / count
     ) +
@@ -1726,7 +1907,7 @@ function renderWeather() {
 
 /*
 ----------------------------------------------------
-Wetter-Tabelle
+7-Tage-Wettertabelle
 ----------------------------------------------------
 */
 
@@ -1739,6 +1920,7 @@ function renderWeatherDays() {
 
   tbody.innerHTML = "";
 
+
   if (
     !weatherData ||
     !weatherData.length
@@ -1746,8 +1928,10 @@ function renderWeatherDays() {
     return;
   }
 
+
   const first =
     weatherData[0].data;
+
 
   if (
     !first.daily ||
@@ -1756,10 +1940,16 @@ function renderWeatherDays() {
     return;
   }
 
+
+  /*
+   * Die Wettertabelle bleibt wie vorher
+   * bei 7 Tagen.
+   */
+
   for (
     let i = 0;
     i < Math.min(
-      14,
+      7,
       first.daily.time.length
     );
     i++
@@ -1767,11 +1957,13 @@ function renderWeatherDays() {
 
     let rain = 0;
 
+
     weatherData.forEach(item => {
 
       const values =
         item.data.daily
           .precipitation_sum;
+
 
       if (
         values &&
@@ -1779,36 +1971,45 @@ function renderWeatherDays() {
       ) {
 
         rain +=
-          Number(values[i]);
+          Number(
+            values[i]
+          );
 
       }
 
     });
 
+
     rain /=
       weatherData.length;
+
 
     const max =
       Number(
         first.daily.temperature_2m_max[i]
       );
 
+
     const min =
       Number(
         first.daily.temperature_2m_min[i]
       );
+
 
     const date =
       new Date(
         first.daily.time[i]
       );
 
+
     const tr =
       document.createElement(
         "tr"
       );
 
+
     tr.innerHTML = `
+
       <td>
         ${formatDate(date)}
       </td>
@@ -1822,9 +2023,13 @@ function renderWeatherDays() {
       <td>
         ${formatNumber(rain)} mm
       </td>
+
     `;
 
-    tbody.appendChild(tr);
+
+    tbody.appendChild(
+      tr
+    );
 
   }
 
@@ -1832,18 +2037,24 @@ function renderWeatherDays() {
 
 
 /*
-----------------------------------------------------
-Hauptupdate
-----------------------------------------------------
+====================================================
+HAUPTFUNKTION
+====================================================
 */
 
 async function update() {
 
   try {
 
+    /*
+     * Pegelstationen
+     */
+
     await loadStations();
 
+
     gaugeData = {};
+
 
     for (
       const name of GAUGE_NAMES
@@ -1852,40 +2063,56 @@ async function update() {
       const station =
         findStation(name);
 
+
       if (!station) {
         continue;
       }
 
+
       const [
         current,
         history
-      ] = await Promise.all([
-        currentGauge(station),
-        historyGauge(station)
-      ]);
+      ] =
+        await Promise.all([
+
+          currentGauge(
+            station
+          ),
+
+          historyGauge(
+            station
+          )
+
+        ]);
+
 
       gaugeData[name] = {
+
         station,
         current,
         history
+
       };
 
     }
 
 
     /*
-      Wetter laden
-    */
+     * Wetter
+     */
 
     await loadWeather();
 
 
     /*
-      Oberwinter
-    */
+     * Oberwinter
+     */
 
     const oberwinter =
-      gaugeData["OBERWINTER"];
+      gaugeData[
+        "OBERWINTER"
+      ];
+
 
     if (!oberwinter) {
 
@@ -1895,11 +2122,14 @@ async function update() {
 
     }
 
+
     const currentArray =
       oberwinter.current || [];
 
+
     const history =
       oberwinter.history || [];
+
 
     const latest =
       currentArray.length
@@ -1908,20 +2138,32 @@ async function update() {
           ]
         : null;
 
+
     const current =
       latest
-        ? Number(latest.value)
+        ? Number(
+            latest.value
+          )
         : 0;
+
 
     document.getElementById(
       "currentLevel"
     ).textContent =
-      formatNumber(current) +
+
+      formatNumber(
+        current
+      ) +
       " cm";
 
 
+    /*
+     * Lokaler Trend
+     */
+
     const localTrend =
       trend(history);
+
 
     document.getElementById(
       "currentTrend"
@@ -1930,8 +2172,8 @@ async function update() {
 
 
     /*
-      Offizielle Prognose
-    */
+     * Offizielle Prognose
+     */
 
     const official =
       await officialForecast(
@@ -1940,16 +2182,18 @@ async function update() {
 
 
     /*
-      14 Tage exakt erzeugen
-    */
+     * Genau 14 Kalendertage
+     */
 
     const dates =
       makeDays();
 
 
     /*
-      Genau 14 Prognosepunkte.
-    */
+     * DIESE 14 WERTE SIND DIE
+     * GEMEINSAME DATENBASIS
+     * FÜR TABELLE UND DIAGRAMM.
+     */
 
     const forecastDays =
       dates.map(
@@ -1965,13 +2209,19 @@ async function update() {
 
 
     /*
-      Tabelle und Diagramm bekommen
-      exakt dasselbe Array.
-    */
+     * Tabelle
+     */
 
     renderForecastTable(
       forecastDays
     );
+
+
+    /*
+     * Diagramm:
+     * jetzt ebenfalls dieselben
+     * 14 Werte.
+     */
 
     drawChart(
       forecastDays
@@ -1979,15 +2229,15 @@ async function update() {
 
 
     /*
-      Oberlieger
-    */
+     * Oberlieger
+     */
 
     renderGauges();
 
 
     /*
-      Wetter
-    */
+     * Wetter
+     */
 
     renderWeather();
 
@@ -1995,8 +2245,8 @@ async function update() {
 
 
     /*
-      Einflussfaktoren
-    */
+     * Einflussfaktoren
+     */
 
     document.getElementById(
       "localSignal"
@@ -2007,18 +2257,25 @@ async function update() {
     const upstream =
       upstreamSignal();
 
+
     let upstreamText =
       "seitwärts";
 
+
     if (upstream > 0.8) {
+
       upstreamText =
         "steigend";
+
     }
 
     else if (upstream < -0.8) {
+
       upstreamText =
         "fallend";
+
     }
+
 
     document.getElementById(
       "upstreamSignal"
@@ -2029,18 +2286,25 @@ async function update() {
     const rain =
       rainFactor(1);
 
+
     let rainText =
       "gering";
 
+
     if (rain > 0.5) {
+
       rainText =
         "erhöht";
+
     }
 
     else if (rain > 0.2) {
+
       rainText =
         "mäßig";
+
     }
+
 
     document.getElementById(
       "rainSignal"
@@ -2055,12 +2319,13 @@ async function update() {
 
 
     /*
-      Zeitstempel
-    */
+     * Aktualisierungszeit
+     */
 
     document.getElementById(
       "lastUpdate"
     ).textContent =
+
       new Date().toLocaleTimeString(
         "de-DE",
         {
@@ -2071,9 +2336,12 @@ async function update() {
 
   }
 
-  catch (error) {
+  catch(error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     document.getElementById(
       "lastUpdate"
@@ -2095,7 +2363,9 @@ update();
 
 
 /*
+----------------------------------------------------
 Alle 15 Minuten aktualisieren
+----------------------------------------------------
 */
 
 setInterval(
@@ -2105,24 +2375,15 @@ setInterval(
 
 
 /*
-Bei Änderung der Bildschirmgröße
-Diagramm neu zeichnen.
+----------------------------------------------------
+Diagramm bei Größenänderung neu zeichnen
+----------------------------------------------------
 */
 
 window.addEventListener(
   "resize",
   () => {
-
-    /*
-      Der letzte Datensatz wird nicht
-      unnötig neu vom Server geladen.
-      Wir lösen deshalb ein Update aus,
-      damit Tabelle und Diagramm
-      garantiert synchron bleiben.
-    */
-
     update();
-
   }
 );
 
