@@ -3,18 +3,758 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fähre Godesberg – Niederdollendorf</title>
+
+<title>Prognose Fähre Godesberg–Niederdollendorf</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #eef3f6;
+    color: #17212b;
+}
+
+header {
+    background: #0b3954;
+    color: white;
+    padding: 25px 18px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+header p {
+    margin: 8px 0 0;
+    opacity: .85;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    padding: 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2 {
+    margin: 0 0 15px;
+    font-size: 18px;
+}
+
+.status {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.green {
+    color: #16833b;
+}
+
+.orange {
+    color: #d88900;
+}
+
+.blue {
+    color: #1261a0;
+}
+
+.big {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 5px 0;
+}
+
+.small {
+    font-size: 13px;
+    color: #687681;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.box {
+    background: #f3f6f8;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+.forecast {
+    border-top: 1px solid #ddd;
+    padding: 12px 0;
+}
+
+.forecast:first-child {
+    border-top: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #687681;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<h1>Prognose Fähre Godesberg–Niederdollendorf</h1>
+<header>
+    <h1>Prognose Fähre Godesberg–Niederdollendorf</h1>
+    <p>Wasserstand · Wetter · Entwicklung</p>
+</header>
 
-<p>Die Seite ist eingerichtet.</p>
+<div class="container">
 
-<p>Wasserstand Oberwinter: wird geladen …</p>
+    <div class="card">
+        <h2>Fährsituation</h2>
 
-<p>Wetter: wird geladen …</p>
+        <div id="status" class="status orange">
+            Daten werden geladen …
+        </div>
+
+        <p id="statusText" class="small">
+            Die aktuelle Wasserstandslage wird geprüft.
+        </p>
+    </div>
+
+
+    <div class="card">
+
+        <h2>Pegel Oberwinter</h2>
+
+        <div id="level" class="big">– cm</div>
+
+        <div id="time" class="small">
+            Messung wird geladen …
+        </div>
+
+        <br>
+
+        <div class="grid">
+
+            <div class="box">
+                <b>Trend</b><br>
+                <span id="trend">–</span>
+            </div>
+
+            <div class="box">
+                <b>Änderung</b><br>
+                <span id="change">–</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Wasserstand – Kurzfristige Entwicklung</h2>
+
+        <p id="hydro">
+            Die Entwicklung wird aus den aktuellen Messwerten des
+            Pegels Oberwinter berechnet.
+        </p>
+
+        <div class="grid">
+
+            <div class="box">
+                <b>24 Stunden</b><br>
+                <span id="change24">–</span>
+            </div>
+
+            <div class="box">
+                <b>Messwerte</b><br>
+                PEGELONLINE / WSV
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Wetter</h2>
+
+        <div class="grid">
+
+            <div class="box">
+                <b>Heute</b><br>
+                <span id="todayWeather">–</span>
+            </div>
+
+            <div class="box">
+                <b>Niederschlag</b><br>
+                <span id="todayRain">–</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>7-Tage-Wettertrend</h2>
+
+        <div id="forecast7">
+            Wird geladen …
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>14-Tage-Trend</h2>
+
+        <p class="small">
+            Die längerfristige Entwicklung wird anhand der
+            Wetter- und Niederschlagsprognose dargestellt.
+            Eine exakte Wasserstandshöhe für 14 Tage wird
+            bewusst nicht vorgetäuscht.
+        </p>
+
+        <div id="forecast14">
+            Wird geladen …
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Wetter- und Niederschlagseinfluss</h2>
+
+        <p id="rainInfluence">
+            Wird berechnet …
+        </p>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    Letzte Aktualisierung:
+    <span id="updated">–</span>
+
+    <br><br>
+
+    Wasserstand: PEGELONLINE /
+    Wasserstraßen- und Schifffahrtsverwaltung des Bundes
+
+    <br>
+
+    Wetter: Open-Meteo
+
+</footer>
+
+
+<script>
+
+/* =========================
+   EINSTELLUNGEN
+========================= */
+
+const PEGEL_UUID =
+"b45359df-c020-4314-adb1-d1921db642da";
+
+const LAT = 50.62;
+const LON = 7.21;
+
+
+/* =========================
+   PEGELONLINE
+========================= */
+
+const CURRENT_URL =
+"https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/"
++ PEGEL_UUID
++ "/W/currentmeasurement.json";
+
+
+const HISTORY_URL =
+"https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/"
++ PEGEL_UUID
++ "/W/measurements.json?start=P24H";
+
+
+/* =========================
+   OPEN-METEO
+========================= */
+
+const WEATHER_URL =
+"https://api.open-meteo.com/v1/forecast"
++ "?latitude=" + LAT
++ "&longitude=" + LON
++ "&current=temperature_2m,precipitation,weather_code"
++ "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum"
++ "&timezone=Europe%2FBerlin"
++ "&forecast_days=16";
+
+
+/* =========================
+   HILFSFUNKTIONEN
+========================= */
+
+function weatherText(code) {
+
+    if (code === 0) return "Klar";
+    if (code <= 3) return "Bewölkt";
+    if (code <= 48) return "Nebel";
+    if (code <= 57) return "Nieselregen";
+    if (code <= 67) return "Regen";
+    if (code <= 77) return "Schnee";
+    if (code <= 82) return "Regenschauer";
+    if (code <= 86) return "Schneeschauer";
+    if (code >= 95) return "Gewitter";
+
+    return "Wechselhaft";
+}
+
+
+function formatDate(date) {
+
+    return new Date(date).toLocaleDateString(
+        "de-DE",
+        {
+            weekday: "short",
+            day: "2-digit",
+            month: "2-digit"
+        }
+    );
+}
+
+
+function formatTime(date) {
+
+    return new Date(date).toLocaleString(
+        "de-DE",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
+}
+
+
+/* =========================
+   PEGEL LADEN
+========================= */
+
+async function loadPegel() {
+
+    try {
+
+        const response =
+            await fetch(CURRENT_URL);
+
+        if (!response.ok) {
+            throw new Error("Pegel nicht erreichbar");
+        }
+
+        const current =
+            await response.json();
+
+        const currentValue =
+            Number(current.value);
+
+
+        document.getElementById("level")
+            .textContent =
+            currentValue.toFixed(0) + " cm";
+
+
+        document.getElementById("time")
+            .textContent =
+            "Letzte Messung: "
+            + formatTime(current.timestamp);
+
+
+        const historyResponse =
+            await fetch(HISTORY_URL);
+
+        if (!historyResponse.ok) {
+            throw new Error("Historie nicht erreichbar");
+        }
+
+        const history =
+            await historyResponse.json();
+
+
+        if (
+            Array.isArray(history)
+            && history.length >= 2
+        ) {
+
+            const previous =
+                Number(
+                    history[history.length - 2].value
+                );
+
+
+            const first =
+                Number(history[0].value);
+
+
+            const change =
+                currentValue - previous;
+
+
+            const change24 =
+                currentValue - first;
+
+
+            let trend =
+                "→ weitgehend stabil";
+
+
+            if (change > 1) {
+                trend = "↗ steigend";
+            }
+
+            if (change < -1) {
+                trend = "↘ fallend";
+            }
+
+
+            document.getElementById("trend")
+                .textContent =
+                trend;
+
+
+            document.getElementById("change")
+                .textContent =
+                (change >= 0 ? "+" : "")
+                + change.toFixed(0)
+                + " cm";
+
+
+            document.getElementById("change24")
+                .textContent =
+                (change24 >= 0 ? "+" : "")
+                + change24.toFixed(0)
+                + " cm";
+
+
+            if (change24 > 3) {
+
+                document.getElementById("hydro")
+                    .textContent =
+                    "Der Pegel Oberwinter ist innerhalb "
+                    + "der vergangenen 24 Stunden gestiegen. "
+                    + "Die weitere Entwicklung sollte "
+                    + "beobachtet werden.";
+
+            }
+            else if (change24 < -3) {
+
+                document.getElementById("hydro")
+                    .textContent =
+                    "Der Pegel Oberwinter ist innerhalb "
+                    + "der vergangenen 24 Stunden gefallen. "
+                    + "Kurzfristig zeigt sich eine fallende "
+                    + "Tendenz.";
+
+            }
+            else {
+
+                document.getElementById("hydro")
+                    .textContent =
+                    "Der Pegel Oberwinter hat sich innerhalb "
+                    + "der vergangenen 24 Stunden nur "
+                    + "gering verändert.";
+
+            }
+
+        }
+
+
+        document.getElementById("status")
+            .textContent =
+            "Wasserstand wird überwacht";
+
+
+        document.getElementById("status")
+            .className =
+            "status blue";
+
+
+        document.getElementById("statusText")
+            .textContent =
+            "Aktueller Pegelstand und Entwicklung "
+            + "werden laufend aktualisiert.";
+
+
+    }
+    catch(error) {
+
+        console.error(error);
+
+        document.getElementById("status")
+            .textContent =
+            "Pegeldaten momentan nicht verfügbar";
+
+
+        document.getElementById("status")
+            .className =
+            "status orange";
+
+
+        document.getElementById("statusText")
+            .textContent =
+            "Die Verbindung zu PEGELONLINE "
+            + "konnte momentan nicht hergestellt werden.";
+
+    }
+
+}
+
+
+/* =========================
+   WETTER LADEN
+========================= */
+
+async function loadWeather() {
+
+    try {
+
+        const response =
+            await fetch(WEATHER_URL);
+
+        if (!response.ok) {
+            throw new Error("Wetter nicht erreichbar");
+        }
+
+        const data =
+            await response.json();
+
+
+        const todayCode =
+            data.daily.weather_code[0];
+
+
+        const todayRain =
+            data.daily.precipitation_sum[0];
+
+
+        document.getElementById("todayWeather")
+            .textContent =
+            weatherText(todayCode)
+            + ", "
+            + data.daily.temperature_2m_min[0]
+            + " bis "
+            + data.daily.temperature_2m_max[0]
+            + " °C";
+
+
+        document.getElementById("todayRain")
+            .textContent =
+            todayRain.toFixed(1)
+            + " mm";
+
+
+        let seven =
+            "";
+
+
+        for (
+            let i = 0;
+            i < Math.min(7, data.daily.time.length);
+            i++
+        ) {
+
+            seven +=
+            `
+            <div class="forecast">
+                <b>${formatDate(data.daily.time[i])}</b><br>
+                ${weatherText(data.daily.weather_code[i])}<br>
+                ${data.daily.temperature_2m_min[i]}
+                bis
+                ${data.daily.temperature_2m_max[i]}
+                °C<br>
+                Niederschlag:
+                ${data.daily.precipitation_sum[i].toFixed(1)}
+                mm
+            </div>
+            `;
+
+        }
+
+
+        document.getElementById("forecast7")
+            .innerHTML =
+            seven;
+
+
+        let fourteen =
+            "";
+
+
+        for (
+            let i = 7;
+            i < data.daily.time.length;
+            i++
+        ) {
+
+            fourteen +=
+            `
+            <div class="forecast">
+                <b>${formatDate(data.daily.time[i])}</b><br>
+                ${weatherText(data.daily.weather_code[i])}<br>
+                ${data.daily.temperature_2m_min[i]}
+                bis
+                ${data.daily.temperature_2m_max[i]}
+                °C<br>
+                Niederschlag:
+                ${data.daily.precipitation_sum[i].toFixed(1)}
+                mm
+            </div>
+            `;
+
+        }
+
+
+        document.getElementById("forecast14")
+            .innerHTML =
+            fourteen;
+
+
+        const totalRain7 =
+            data.daily.precipitation_sum
+            .slice(0,7)
+            .reduce(
+                (sum, value) =>
+                sum + Number(value),
+                0
+            );
+
+
+        const totalRain14 =
+            data.daily.precipitation_sum
+            .slice(0,14)
+            .reduce(
+                (sum, value) =>
+                sum + Number(value),
+                0
+            );
+
+
+        let influence =
+            "Für die nächsten Tage ist anhand "
+            + "der lokalen Niederschlagsprognose "
+            + "keine außergewöhnliche Belastung "
+            + "erkennbar.";
+
+
+        if (totalRain7 >= 40) {
+
+            influence =
+                "In den kommenden 7 Tagen wird "
+                + "vergleichsweise viel Niederschlag "
+                + "prognostiziert. Dies kann die "
+                + "Wasserstandsentwicklung beeinflussen. "
+                + "Die tatsächliche Reaktion des Rheins "
+                + "hängt jedoch vom gesamten Einzugsgebiet "
+                + "und den Zuflüssen ab.";
+
+        }
+
+
+        document.getElementById("rainInfluence")
+            .textContent =
+            influence
+            + " Prognostizierte Niederschlagssumme "
+            + "lokal: ca. "
+            + totalRain7.toFixed(0)
+            + " mm in 7 Tagen bzw. "
+            + totalRain14.toFixed(0)
+            + " mm in 14 Tagen.";
+
+    }
+    catch(error) {
+
+        console.error(error);
+
+        document.getElementById("forecast7")
+            .textContent =
+            "Wetterdaten momentan nicht verfügbar.";
+
+        document.getElementById("forecast14")
+            .textContent =
+            "Wetterdaten momentan nicht verfügbar.";
+
+    }
+
+}
+
+
+/* =========================
+   AKTUALISIERUNG
+========================= */
+
+function updateTime() {
+
+    document.getElementById("updated")
+        .textContent =
+        new Date().toLocaleString(
+            "de-DE",
+            {
+                dateStyle: "short",
+                timeStyle: "short"
+            }
+        );
+
+}
+
+
+async function updateAll() {
+
+    await loadPegel();
+
+    await loadWeather();
+
+    updateTime();
+
+}
+
+
+updateAll();
+
+
+/* Alle 5 Minuten aktualisieren */
+
+setInterval(
+    updateAll,
+    5 * 60 * 1000
+);
+
+</script>
 
 </body>
 </html>
