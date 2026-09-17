@@ -1,625 +1,3331 @@
 <!DOCTYPE html>
-
 <html lang="de">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Prognose Fähre Godesberg–Niederdollendorf</title>
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
-
-  margin:0;
-
-  font-family:Arial,Helvetica,sans-serif;
-
-  background:#eef3f7;
-
-  color:#17212b;
-
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+background:#eef3f7;
+color:#17232d;
 }
 
 header{
-
-  background:#0b3d62;
-
-  color:white;
-
-  padding:28px 18px;
-
-  text-align:center;
-
+background:linear-gradient(135deg,#103a59,#176b98);
+color:white;
+padding:30px 18px 36px;
 }
 
-header h1{
-
-  margin:0 0 8px;
-
-  font-size:26px;
-
+.header{
+max-width:1150px;
+margin:auto;
 }
 
-header p{
-
-  margin:0;
-
-  opacity:.9;
-
+.title{
+font-size:28px;
+font-weight:800;
 }
 
-main{
+.subtitle{
+margin-top:7px;
+font-size:15px;
+opacity:.9;
+}
 
-  max-width:1000px;
-
-  margin:auto;
-
-  padding:18px;
-
+.container{
+max-width:1150px;
+margin:-18px auto 40px;
+padding:0 14px;
 }
 
 .card{
-
-  background:white;
-
-  border-radius:14px;
-
-  padding:20px;
-
-  margin-bottom:18px;
-
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-
+background:white;
+border-radius:17px;
+padding:21px;
+margin-bottom:16px;
+box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.card h2{
+.card-title{
+font-size:18px;
+font-weight:800;
+margin-bottom:16px;
+}
 
-  margin-top:0;
-
-  color:#0b3d62;
-
+.status-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
 }
 
 .status{
-
-  padding:16px;
-
-  border-radius:10px;
-
-  background:#e8f5e9;
-
-  font-weight:bold;
-
+display:flex;
+align-items:center;
+gap:9px;
+font-weight:750;
 }
 
-.big{
-
-  font-size:34px;
-
-  font-weight:bold;
-
-  margin:10px 0;
-
+.status-dot{
+width:13px;
+height:13px;
+border-radius:50%;
+background:#20a365;
 }
 
-.grid{
+.status-description{
+margin-top:7px;
+font-size:14px;
+color:#64727c;
+line-height:1.45;
+}
 
-  display:grid;
+.updated{
+font-size:12px;
+color:#7b8790;
+text-align:right;
+white-space:nowrap;
+}
 
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+.current{
+display:flex;
+align-items:baseline;
+gap:7px;
+}
 
-  gap:12px;
+.current-value{
+font-size:52px;
+font-weight:850;
+}
 
+.current-unit{
+font-size:17px;
+color:#697781;
+}
+
+.current-info{
+margin-top:9px;
+font-size:14px;
+color:#5e6d77;
+}
+
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:13px;
+}
+
+.metric{
+background:#f6f8fa;
+border-radius:13px;
+padding:17px;
+}
+
+.metric-label{
+font-size:13px;
+color:#707e88;
+}
+
+.metric-value{
+font-size:27px;
+font-weight:800;
+margin-top:7px;
+}
+
+.metric-note{
+font-size:12px;
+color:#7c8891;
+margin-top:5px;
+}
+
+.forecasts{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:13px;
+}
+
+.forecast{
+border:1px solid #e0e7eb;
+border-radius:14px;
+padding:18px;
+}
+
+.forecast-hour{
+font-size:13px;
+color:#687681;
+font-weight:700;
+}
+
+.forecast-value{
+font-size:30px;
+font-weight:850;
+margin:8px 0;
+}
+
+.forecast-change{
+font-size:13px;
+color:#697781;
+}
+
+.forecast-source{
+font-size:11px;
+color:#74818a;
+margin-top:8px;
+}
+
+.official-box{
+margin-top:15px;
+padding:13px;
+border-radius:10px;
+background:#edf6fb;
+color:#355d73;
+font-size:13px;
+line-height:1.5;
+}
+
+.gauges{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
 }
 
 .gauge{
-
-  background:#f4f7f9;
-
-  border-radius:10px;
-
-  padding:14px;
-
+border:1px solid #e1e7eb;
+border-radius:12px;
+padding:13px;
 }
 
-.gauge strong{
-
-  display:block;
-
-  margin-bottom:7px;
-
+.gauge-name{
+font-weight:750;
+font-size:14px;
 }
 
-.weather{
-
-  text-align:center;
-
+.gauge-value{
+font-size:22px;
+font-weight:800;
+margin-top:7px;
 }
 
-.weather .icon{
-
-  font-size:34px;
-
+.gauge-trend{
+font-size:11px;
+color:#71808a;
+margin-top:4px;
 }
 
-.weather .date{
-
-  font-weight:bold;
-
+.chart-wrap{
+position:relative;
+width:100%;
 }
 
-.small{
+canvas{
+width:100%;
+height:310px;
+display:block;
+}
 
-  color:#65727d;
+.factor{
+margin-bottom:15px;
+}
 
-  font-size:13px;
+.factor:last-child{
+margin-bottom:0;
+}
 
+.factor-head{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+margin-bottom:6px;
+}
+
+.factor-bar{
+height:8px;
+background:#e6ebee;
+border-radius:20px;
+overflow:hidden;
+}
+
+.factor-fill{
+height:100%;
+background:#176b98;
+border-radius:20px;
+}
+
+.confidence{
+display:grid;
+grid-template-columns:1fr auto;
+gap:20px;
+align-items:center;
+}
+
+.confidence-value{
+font-size:21px;
+font-weight:800;
+}
+
+.confidence-text{
+font-size:13px;
+color:#66747e;
+line-height:1.5;
+margin-top:5px;
+}
+
+.weather-current{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.weather-box{
+background:#f6f8fa;
+border-radius:12px;
+padding:16px;
+}
+
+.weather-label{
+font-size:12px;
+color:#71808a;
+}
+
+.weather-value{
+font-size:22px;
+font-weight:800;
+margin-top:5px;
+}
+
+.weather-points{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+}
+
+.weather-point{
+border:1px solid #e3e8eb;
+border-radius:11px;
+padding:12px;
+}
+
+.weather-point-name{
+font-weight:700;
+font-size:13px;
+}
+
+.weather-point-value{
+font-size:18px;
+font-weight:750;
+margin-top:5px;
+}
+
+.days{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+}
+
+.day{
+background:#f6f8fa;
+border-radius:11px;
+padding:12px 7px;
+text-align:center;
+}
+
+.day-date{
+font-size:11px;
+color:#697781;
+}
+
+.day-temp{
+font-size:18px;
+font-weight:800;
+margin:8px 0;
+}
+
+.day-rain{
+font-size:11px;
+color:#52778f;
+line-height:1.5;
+}
+
+.text{
+font-size:14px;
+line-height:1.6;
+color:#46545e;
+}
+
+.sources{
+font-size:13px;
+line-height:1.7;
+color:#687680;
+}
+
+.footer{
+text-align:center;
+font-size:12px;
+color:#7b8790;
+padding:5px 0 30px;
 }
 
 .loading{
+font-size:14px;
+color:#71808a;
+}
 
-  color:#65727d;
+.error{
+padding:12px;
+border-radius:10px;
+background:#fff1f1;
+color:#982d2d;
+font-size:13px;
+}
+
+@media(max-width:800px){
+
+.grid3,
+.forecasts{
+grid-template-columns:1fr;
+}
+
+.gauges{
+grid-template-columns:repeat(2,1fr);
+}
+
+.weather-current{
+grid-template-columns:1fr;
+}
+
+.weather-points{
+grid-template-columns:1fr;
+}
+
+.days{
+grid-template-columns:repeat(2,1fr);
+}
+
+.status-card{
+display:block;
+}
+
+.updated{
+text-align:left;
+margin-top:12px;
+}
 
 }
 
-footer{
+@media(max-width:480px){
 
-  text-align:center;
+.title{
+font-size:23px;
+}
 
-  color:#65727d;
-
-  font-size:13px;
-
-  padding:20px;
+.current-value{
+font-size:43px;
+}
 
 }
 
 </style>
-
 </head>
+
 
 <body>
 
 <header>
 
-  <h1>Prognose Fähre Godesberg–Niederdollendorf</h1>
+<div class="header">
 
-  <p>Rheinwasserstand · Wetter · Niederschlag</p>
+<div class="title">
+Prognose Fähre Godesberg–Niederdollendorf
+</div>
+
+<div class="subtitle">
+Rheinwasserstand · Pegelentwicklung · Wetter · Niederschlag
+</div>
+
+</div>
 
 </header>
 
-<main>
 
-<section class="card">
+<div class="container">
 
-  <h2>Aktuelle Situation</h2>
 
-  <div class="status">
+<!-- STATUS -->
 
-    🟢 Wasserstand wird überwacht
+<div class="card status-card">
 
-  </div>
+<div>
 
-  <div class="big" id="oberwinter">–</div>
+<div class="status">
 
-  <div>cm am Pegel Oberwinter</div>
+<span
+class="status-dot"
+id="statusDot">
+</span>
 
-  <p class="small" id="update">Daten werden geladen …</p>
+Wasserstand wird überwacht
 
-</section>
+</div>
 
-<section class="card">
+<div class="status-description">
 
-  <h2>Rhein-Pegelkette</h2>
+Die Prognose kombiniert offizielle Wasserstandsvorhersagen
+mit der aktuellen Entwicklung der Rhein-Pegelkette sowie
+Wetter- und Niederschlagsdaten.
 
-  <p class="small">
+</div>
 
-    Die Entwicklung des Rheinwasserstandes wird anhand mehrerer Pegel
+</div>
 
-    entlang des Oberrheins und Mittelrheins beobachtet.
+<div class="updated">
 
-  </p>
+Letzte Aktualisierung<br>
 
-  <div class="grid" id="gauges">
+<strong id="updated">
+–
+</strong>
 
-    <div class="gauge">Maxau<br><strong>–</strong></div>
+</div>
 
-    <div class="gauge">Mannheim<br><strong>–</strong></div>
+</div>
 
-    <div class="gauge">Mainz<br><strong>–</strong></div>
 
-    <div class="gauge">Kaub<br><strong>–</strong></div>
+<!-- OBERWINTER -->
 
-    <div class="gauge">Koblenz<br><strong>–</strong></div>
+<div class="card">
 
-    <div class="gauge">Andernach<br><strong>–</strong></div>
+<div class="card-title">
+Aktueller Pegel Oberwinter
+</div>
 
-    <div class="gauge">Oberwinter<br><strong>–</strong></div>
+<div class="current">
 
-  </div>
+<span
+class="current-value"
+id="currentLevel">
+–
+</span>
 
-</section>
+<span class="current-unit">
+cm
+</span>
 
-<section class="card">
+</div>
 
-  <h2>Kurzfristige Entwicklung</h2>
+<div
+class="current-info"
+id="currentInfo">
+Lade Daten …
+</div>
 
-  <p id="forecast" class="loading">
+</div>
 
-    Kurzfristige Pegelprognose wird geladen …
 
-  </p>
+<!-- KURZFRISTIGE PROGNOSE -->
 
-</section>
+<div class="card">
 
-<section class="card">
+<div class="card-title">
+Kurzfristige Wasserstandsprognose
+</div>
 
-  <h2>Wetter und Niederschlag</h2>
+<div class="forecasts">
 
-  <p>
 
-    Das Wetter und insbesondere Niederschläge im Einzugsgebiet können
+<div class="forecast">
 
-    die weitere Entwicklung des Rheinwasserstandes beeinflussen.
+<div class="forecast-hour">
++24 Stunden
+</div>
 
-  </p>
+<div
+class="forecast-value"
+id="p24">
+–
+</div>
 
-  <div class="grid" id="weather">
+<div
+class="forecast-change"
+id="c24">
+–
+</div>
 
-    <div class="loading">Wetterdaten werden geladen …</div>
+<div
+class="forecast-source"
+id="s24">
+–
+</div>
 
-  </div>
+</div>
 
-</section>
 
-<section class="card">
+<div class="forecast">
 
-  <h2>14-Tage-Wetterprognose</h2>
+<div class="forecast-hour">
++48 Stunden
+</div>
 
-  <p class="small">
+<div
+class="forecast-value"
+id="p48">
+–
+</div>
 
-    Die 14-Tage-Prognose dient als Wetter- und Niederschlagstrend.
+<div
+class="forecast-change"
+id="c48">
+–
+</div>
 
-    Sie stellt keine exakte 14-Tage-Pegelprognose dar.
+<div
+class="forecast-source"
+id="s48">
+–
+</div>
 
-  </p>
+</div>
 
-  <div class="grid" id="daily">
 
-    <div class="loading">14-Tage-Prognose wird geladen …</div>
+<div class="forecast">
 
-  </div>
+<div class="forecast-hour">
++72 Stunden
+</div>
 
-</section>
+<div
+class="forecast-value"
+id="p72">
+–
+</div>
 
-</main>
+<div
+class="forecast-change"
+id="c72">
+–
+</div>
 
-<footer>
+<div
+class="forecast-source"
+id="s72">
+–
+</div>
 
-  Datenquellen: PEGELONLINE / WSV · Open-Meteo<br>
+</div>
 
-  Automatische Aktualisierung alle 5 Minuten
+</div>
 
-</footer>
+
+<div class="official-box">
+
+<strong>Berechnung:</strong><br>
+
+Die offizielle PEGELONLINE-Wasserstandsvorhersage
+wird bevorzugt. Zusätzlich werden die gemessenen
+Trends der flussaufwärts liegenden Pegel und die
+Niederschlagsentwicklung zur Plausibilisierung und
+Sicherheitsbewertung verwendet.
+
+</div>
+
+</div>
+
+
+<!-- PEGELKETTE -->
+
+<div class="card">
+
+<div class="card-title">
+Rhein-Pegelkette
+</div>
+
+<div
+class="gauges"
+id="gauges">
+
+<div class="loading">
+Lade Pegel …
+</div>
+
+</div>
+
+</div>
+
+
+<!-- DIAGRAMM -->
+
+<div class="card">
+
+<div class="card-title">
+Wasserstand: Messung und Zukunftsprognose
+</div>
+
+<div class="chart-wrap">
+
+<canvas id="chart"></canvas>
+
+</div>
+
+</div>
+
+
+<!-- EINFLUSSFAKTOREN -->
+
+<div class="card">
+
+<div class="card-title">
+Einflussfaktoren der Prognose
+</div>
+
+
+<div class="factor">
+
+<div class="factor-head">
+
+<span>
+Oberwinter-Eigenentwicklung
+</span>
+
+<strong id="fTrend">
+–
+</strong>
+
+</div>
+
+<div class="factor-bar">
+
+<div
+class="factor-fill"
+id="bTrend"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="factor">
+
+<div class="factor-head">
+
+<span>
+Ankommende Wasserwelle
+</span>
+
+<strong id="fWave">
+–
+</strong>
+
+</div>
+
+<div class="factor-bar">
+
+<div
+class="factor-fill"
+id="bWave"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="factor">
+
+<div class="factor-head">
+
+<span>
+Niederschlag Einzugsgebiet
+</span>
+
+<strong id="fRain">
+–
+</strong>
+
+</div>
+
+<div class="factor-bar">
+
+<div
+class="factor-fill"
+id="bRain"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="factor">
+
+<div class="factor-head">
+
+<span>
+Übereinstimmung der Modelle
+</span>
+
+<strong id="fAgreement">
+–
+</strong>
+
+</div>
+
+<div class="factor-bar">
+
+<div
+class="factor-fill"
+id="bAgreement"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SICHERHEIT -->
+
+<div class="card">
+
+<div class="confidence">
+
+<div>
+
+<div class="card-title">
+Prognosesicherheit
+</div>
+
+<div
+class="confidence-text"
+id="confidenceText">
+
+–
+
+</div>
+
+</div>
+
+<div
+class="confidence-value"
+id="confidenceValue">
+
+–
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WETTER -->
+
+<div class="card">
+
+<div class="card-title">
+Wetter und Niederschlag
+</div>
+
+<div class="weather-current">
+
+
+<div class="weather-box">
+
+<div class="weather-label">
+Temperatur
+</div>
+
+<div
+class="weather-value"
+id="temperature">
+–
+</div>
+
+</div>
+
+
+<div class="weather-box">
+
+<div class="weather-label">
+Niederschlag aktuell
+</div>
+
+<div
+class="weather-value"
+id="rainCurrent">
+–
+</div>
+
+</div>
+
+
+<div class="weather-box">
+
+<div class="weather-label">
+Wind
+</div>
+
+<div
+class="weather-value"
+id="wind">
+–
+</div>
+
+</div>
+
+</div>
+
+
+<div class="weather-points"
+id="weatherPoints">
+
+</div>
+
+</div>
+
+
+<!-- 7 TAGE -->
+
+<div class="card">
+
+<div class="card-title">
+Wetter- und Niederschlagstrend · 7 Tage
+</div>
+
+<div
+class="days"
+id="days7">
+
+<div class="loading">
+Lade Wetter …
+</div>
+
+</div>
+
+</div>
+
+
+<!-- 14 TAGE -->
+
+<div class="card">
+
+<div class="card-title">
+14-Tage-Wettertrend
+</div>
+
+<div
+class="days"
+id="days14">
+
+<div class="loading">
+Lade Wetter …
+</div>
+
+</div>
+
+<br>
+
+<div class="text">
+
+Der Zeitraum 8–14 Tage wird als Wetter- und
+Niederschlagstrend dargestellt. Wegen der zunehmenden
+meteorologischen Unsicherheit werden daraus keine
+scheinbar exakten Pegelwerte erzeugt.
+
+</div>
+
+</div>
+
+
+<!-- ERKLÄRUNG -->
+
+<div class="card">
+
+<div class="card-title">
+Wie die Prognose entsteht
+</div>
+
+<div class="text">
+
+<strong>1. Oberwinter</strong><br>
+
+Der aktuelle Pegel und die Entwicklung der vergangenen
+24, 48 und 72 Stunden bilden den Ausgangspunkt.
+
+<br><br>
+
+<strong>2. Rhein-Pegelkette</strong><br>
+
+Die Entwicklung wird entlang
+Maxau → Mannheim → Mainz → Kaub → Koblenz →
+Andernach → Oberwinter verfolgt.
+
+Dabei wird nicht nur die absolute Höhe betrachtet,
+sondern auch die Veränderung der Pegel.
+
+<br><br>
+
+<strong>3. Laufzeit der Wasserwelle</strong><br>
+
+Eine Veränderung an einem weiter flussaufwärts liegenden
+Pegel erreicht Oberwinter nicht sofort. Deshalb werden
+flussaufwärts liegende Trends mit unterschiedlichen
+zeitlichen Gewichten bewertet.
+
+<br><br>
+
+<strong>4. Niederschlag</strong><br>
+
+Niederschlag wird räumlich über mehrere Bereiche des
+Rhein-Einzugsgebiets betrachtet. Er wird nicht einfach
+1:1 in Zentimeter Wasserstand umgerechnet.
+
+<br><br>
+
+<strong>5. Offizielle Prognose</strong><br>
+
+Falls PEGELONLINE für Oberwinter eine offizielle
+Wasserstandsvorhersage liefert, ist diese die wichtigste
+numerische Zukunftsinformation.
+
+<br><br>
+
+<strong>6. Eigenes Trendmodell</strong><br>
+
+Die Pegel- und Wetterdaten werden zusätzlich verwendet,
+um zu prüfen, ob die offizielle Prognose mit der aktuell
+beobachteten Entwicklung plausibel zusammenpasst.
+
+<br><br>
+
+<strong>7. Unsicherheit</strong><br>
+
+Je weiter die Prognose in die Zukunft reicht, desto größer
+wird die Unsicherheit. Deshalb wird die 7–14-Tage-Prognose
+als Trend und nicht als exakte Pegelzahl dargestellt.
+
+</div>
+
+</div>
+
+
+<!-- QUELLEN -->
+
+<div class="card">
+
+<div class="card-title">
+Datenquellen
+</div>
+
+<div class="sources">
+
+<strong>Wasserstände und Wasserstandsvorhersagen:</strong><br>
+PEGELONLINE · Wasserstraßen- und Schifffahrtsverwaltung des Bundes
+
+<br><br>
+
+<strong>Wetter und Niederschlag:</strong><br>
+Open-Meteo
+
+<br><br>
+
+Die dargestellten Werte dienen der Information.
+Wasserstände und Prognosen können sich jederzeit ändern.
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+Prognose Fähre Godesberg–Niederdollendorf
+
+</div>
+
+
+</div>
+
 
 <script>
 
-const API =
+/* =========================================================
+   KONFIGURATION
+========================================================= */
 
+const PEGEL =
 "https://www.pegelonline.wsv.de/webservices/rest-api/v2";
 
-const stations = [
+const WEATHER =
+"https://api.open-meteo.com/v1/forecast";
 
-  {name:"Maxau", id:"23700200"},
 
-  {name:"Mannheim", id:"23700700"},
+/*
+   Haupt-Pegelstrecke
+*/
 
-  {name:"Mainz", id:"25100100"},
+const MAIN_GAUGES = [
 
-  {name:"Kaub", id:"25700100"},
-
-  {name:"Koblenz", id:"25900700"},
-
-  {name:"Andernach", id:"27100300"},
-
-  {name:"Oberwinter", id:"27100700"}
+"MAXAU",
+"MANNHEIM",
+"MAINZ",
+"KAUB",
+"KOBLENZ",
+"ANDERNACH",
+"OBERWINTER"
 
 ];
 
-async function getStation(id){
 
-  const response =
+/*
+   Wetterpunkte.
+   Diese ersetzen keine Abflussmodelle.
+   Sie dienen zur Erfassung der Niederschlagsentwicklung
+   in verschiedenen Teilen des Einzugsgebietes.
+*/
 
-    await fetch(API + "/stations.json?fuzzyId=" + id);
+const WEATHER_POINTS = [
 
-  if(!response.ok){
+{
+name:"Oberwinter",
+lat:50.62,
+lon:7.21
+},
 
-    throw new Error("Pegelstation nicht erreichbar");
+{
+name:"Koblenz",
+lat:50.36,
+lon:7.59
+},
 
-  }
+{
+name:"Kaub",
+lat:50.09,
+lon:7.77
+},
 
-  const data = await response.json();
+{
+name:"Mainz",
+lat:50.00,
+lon:8.27
+},
 
-  if(!data.length){
+{
+name:"Mannheim",
+lat:49.49,
+lon:8.47
+},
 
-    throw new Error("Station nicht gefunden");
+{
+name:"Karlsruhe",
+lat:49.01,
+lon:8.40
+},
 
-  }
+{
+name:"Stuttgart / Neckar",
+lat:48.78,
+lon:9.18
+},
 
-  return data[0];
+{
+name:"Frankfurt / Main",
+lat:50.11,
+lon:8.68
+},
+
+{
+name:"Trier / Mosel",
+lat:49.75,
+lon:6.64
+}
+
+];
+
+
+/*
+   ungefähre hydrologische Gewichtung der Pegel.
+   Je näher an Oberwinter, desto direkter das Signal.
+
+   Diese Faktoren sind KEINE amtlichen Laufzeiten.
+   Sie dienen ausschließlich der internen Trendanalyse.
+*/
+
+const WEIGHTS = {
+
+MAXAU:0.05,
+
+MANNHEIM:0.08,
+
+MAINZ:0.13,
+
+KAUB:0.18,
+
+KOBLENZ:0.25,
+
+ANDERNACH:0.31
+
+};
+
+
+/* =========================================================
+   HILFSFUNKTIONEN
+========================================================= */
+
+function num(v){
+
+const n=Number(v);
+
+return Number.isFinite(n)?n:null;
 
 }
 
-async function getCurrent(station){
 
-  const response =
+function clamp(v,min,max){
 
-    await fetch(
-
-      API + "/stations/" +
-
-      station.uuid +
-
-      "/W/currentmeasurement.json"
-
-    );
-
-  if(!response.ok){
-
-    throw new Error("Messwert nicht verfügbar");
-
-  }
-
-  return await response.json();
+return Math.max(min,Math.min(max,v));
 
 }
 
-async function loadGauges(){
 
-  const container =
+function cm(v){
 
-    document.getElementById("gauges");
-
-  container.innerHTML="";
-
-  for(const item of stations){
-
-    const box=document.createElement("div");
-
-    box.className="gauge";
-
-    box.innerHTML =
-
-      "<strong>"+item.name+"</strong>" +
-
-      "<span>Wird geladen …</span>";
-
-    container.appendChild(box);
-
-    try{
-
-      const station =
-
-        await getStation(item.id);
-
-      const measurement =
-
-        await getCurrent(station);
-
-      const value =
-
-        measurement.value;
-
-      box.innerHTML =
-
-        "<strong>"+item.name+"</strong>" +
-
-        value.toFixed(0) + " cm";
-
-      if(item.name==="Oberwinter"){
-
-        document.getElementById("oberwinter").textContent =
-
-          value.toFixed(0) + " cm";
-
-        document.getElementById("update").textContent =
-
-          "Letzte Aktualisierung: " +
-
-          new Date().toLocaleString("de-DE");
-
-      }
-
-    }catch(error){
-
-      box.innerHTML =
-
-        "<strong>"+item.name+"</strong>" +
-
-        "<span>Nicht verfügbar</span>";
-
-    }
-
-  }
+return v===null||v===undefined
+?"–"
+:Math.round(v)+" cm";
 
 }
 
-async function loadWeather(){
 
-  const url =
+function time(v){
 
-    "https://api.open-meteo.com/v1/forecast" +
+if(!v)return "–";
 
-    "?latitude=50.62" +
+const d=new Date(v);
 
-    "&longitude=7.21" +
+if(Number.isNaN(d.getTime()))return "–";
 
-    "&current=temperature_2m,precipitation,weather_code" +
-
-    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max" +
-
-    "&forecast_days=14" +
-
-    "&timezone=Europe%2FBerlin";
-
-  try{
-
-    const response =
-
-      await fetch(url);
-
-    const data =
-
-      await response.json();
-
-    const weather =
-
-      document.getElementById("weather");
-
-    const current =
-
-      data.current;
-
-    weather.innerHTML =
-
-      "<div class='gauge'>" +
-
-      "<strong>Aktuell</strong>" +
-
-      current.temperature_2m +
-
-      " °C<br>" +
-
-      current.precipitation +
-
-      " mm Niederschlag" +
-
-      "</div>";
-
-    const daily =
-
-      document.getElementById("daily");
-
-    daily.innerHTML="";
-
-    for(let i=0;i<data.daily.time.length;i++){
-
-      const date =
-
-        new Date(data.daily.time[i]);
-
-      const card =
-
-        document.createElement("div");
-
-      card.className="gauge weather";
-
-      card.innerHTML =
-
-        "<div class='date'>" +
-
-        date.toLocaleDateString("de-DE",{
-
-          weekday:"short",
-
-          day:"2-digit",
-
-          month:"2-digit"
-
-        }) +
-
-        "</div>" +
-
-        "<div class='icon'>" +
-
-        weatherIcon(data.daily.weather_code[i]) +
-
-        "</div>" +
-
-        "<strong>" +
-
-        data.daily.temperature_2m_max[i] +
-
-        " °C / " +
-
-        data.daily.temperature_2m_min[i] +
-
-        " °C" +
-
-        "</strong>" +
-
-        "<div>" +
-
-        data.daily.precipitation_sum[i] +
-
-        " mm Regen</div>" +
-
-        "<div>" +
-
-        data.daily.precipitation_probability_max[i] +
-
-        "% Regenwahrscheinlichkeit</div>";
-
-      daily.appendChild(card);
-
-    }
-
-  }catch(error){
-
-    document.getElementById("weather").innerHTML =
-
-      "<div class='loading'>Wetterdaten momentan nicht verfügbar.</div>";
-
-    document.getElementById("daily").innerHTML =
-
-      "<div class='loading'>14-Tage-Prognose momentan nicht verfügbar.</div>";
-
-  }
+return d.toLocaleString(
+"de-DE",
+{
+day:"2-digit",
+month:"2-digit",
+hour:"2-digit",
+minute:"2-digit"
+}
+);
 
 }
 
-function weatherIcon(code){
 
-  if(code===0) return "☀️";
+/* =========================================================
+   STATIONEN
+========================================================= */
 
-  if(code<=3) return "🌤️";
+async function loadStations(){
 
-  if(code<=48) return "🌫️";
+const url=
+PEGEL+
+"/stations.json?waters=RHEIN&includeTimeseries=true&includeCurrentMeasurement=true&includeForecastTimeseries=true";
 
-  if(code<=67) return "🌧️";
+const r=await fetch(
+url,
+{cache:"no-store"}
+);
 
-  if(code<=77) return "❄️";
+if(!r.ok)
+throw new Error("Stationen HTTP "+r.status);
 
-  if(code<=82) return "🌦️";
-
-  if(code<=99) return "⛈️";
-
-  return "🌤️";
-
-}
-
-async function loadAll(){
-
-  await loadGauges();
-
-  await loadWeather();
-
-  document.getElementById("forecast").textContent =
-
-    "Die kurzfristige Pegelentwicklung wird anhand der verfügbaren Pegeldaten überwacht.";
+return await r.json();
 
 }
 
-loadAll();
 
-setInterval(loadAll,5*60*1000);
+function findStation(list,name){
+
+return list.find(
+s=>
+String(s.shortname||"")
+.toUpperCase()===name
+)
+||
+list.find(
+s=>
+String(s.shortname||"")
+.toUpperCase()
+.includes(name)
+)
+||
+null;
+
+}
+
+
+/* =========================================================
+   AKTUELLER PEGEL
+========================================================= */
+
+async function currentGauge(station){
+
+if(!station)return null;
+
+try{
+
+const r=
+await fetch(
+PEGEL+
+"/stations/"+
+station.uuid+
+"/W/currentmeasurement.json",
+{cache:"no-store"}
+);
+
+if(!r.ok)return null;
+
+return await r.json();
+
+}catch{
+
+return null;
+
+}
+
+}
+
+
+/* =========================================================
+   HISTORIE
+========================================================= */
+
+async function historyGauge(station){
+
+if(!station)return [];
+
+try{
+
+const r=
+await fetch(
+PEGEL+
+"/stations/"+
+station.uuid+
+"/W/measurements.json?start=P3D",
+{cache:"no-store"}
+);
+
+if(!r.ok)return [];
+
+return await r.json();
+
+}catch{
+
+return [];
+
+}
+
+}
+
+
+/* =========================================================
+   OFFIZIELLE PROGNOSE
+========================================================= */
+
+async function officialForecast(station){
+
+if(!station)return [];
+
+try{
+
+const r=
+await fetch(
+PEGEL+
+"/stations/"+
+station.uuid+
+"/WV/measurements.json",
+{cache:"no-store"}
+);
+
+if(!r.ok)return [];
+
+const data=await r.json();
+
+if(!Array.isArray(data))
+return [];
+
+return data
+.filter(
+x=>
+x &&
+x.timestamp &&
+num(x.value)!==null
+)
+.sort(
+(a,b)=>
+new Date(a.timestamp)-
+new Date(b.timestamp)
+);
+
+}catch{
+
+return [];
+
+}
+
+}
+
+
+/* =========================================================
+   TREND AUS HISTORIE
+========================================================= */
+
+function calculateHistoryTrend(data){
+
+if(!data||data.length<4){
+
+return{
+slope:0,
+change24:0,
+change48:0,
+change72:0,
+quality:0
+};
+
+}
+
+
+const clean=
+data
+.filter(
+x=>
+x &&
+x.timestamp &&
+num(x.value)!==null
+)
+.map(
+x=>({
+t:new Date(x.timestamp).getTime(),
+v:num(x.value)
+})
+)
+.sort(
+(a,b)=>a.t-b.t
+);
+
+
+if(clean.length<4){
+
+return{
+slope:0,
+change24:0,
+change48:0,
+change72:0,
+quality:0
+};
+
+}
+
+
+function nearest(hours){
+
+const target=
+Date.now()-
+hours*3600000;
+
+let best=clean[0];
+let diff=Infinity;
+
+for(const p of clean){
+
+const d=
+Math.abs(p.t-target);
+
+if(d<diff){
+
+diff=d;
+best=p;
+
+}
+
+}
+
+return best;
+
+}
+
+
+const latest=
+clean[clean.length-1];
+
+const p24=
+nearest(24);
+
+const p48=
+nearest(48);
+
+const p72=
+nearest(72);
+
+
+return{
+
+slope:
+latest.v-p24.v,
+
+change24:
+latest.v-p24.v,
+
+change48:
+latest.v-p48.v,
+
+change72:
+latest.v-p72.v,
+
+quality:
+clamp(clean.length/40,0,1)
+
+};
+
+}
+
+
+/* =========================================================
+   PEGELTREND ALLER STATIONEN
+========================================================= */
+
+function buildGaugeTrend(
+current,
+history
+){
+
+const result={};
+
+for(const name of MAIN_GAUGES){
+
+const h=
+history[name]||[];
+
+result[name]=
+calculateHistoryTrend(h);
+
+}
+
+return result;
+
+}
+
+
+/* =========================================================
+   ANKOMMENDE WASSERWELLE
+========================================================= */
+
+function waveSignal(
+current,
+trends
+){
+
+let score=50;
+
+let totalWeight=0;
+
+let weighted=0;
+
+
+for(const name of Object.keys(WEIGHTS)){
+
+const t=
+trends[name];
+
+if(!t)continue;
+
+const w=
+WEIGHTS[name];
+
+weighted+=
+t.change24*w;
+
+totalWeight+=w;
+
+}
+
+
+if(totalWeight>0){
+
+const avg=
+weighted/totalWeight;
+
+
+/*
+   positive = steigende Wasserstände upstream
+*/
+
+score=
+clamp(
+50+
+avg*5,
+5,
+95
+);
+
+}
+
+
+let label="stabil";
+
+if(score>=65)
+label="steigend";
+
+else if(score<=35)
+label="fallend";
+
+
+return{
+
+score,
+label
+
+};
+
+}
+
+
+/* =========================================================
+   WETTER EINZELPUNKT
+========================================================= */
+
+async function weatherPoint(point){
+
+const url=
+WEATHER+
+"?latitude="+
+point.lat+
+"&longitude="+
+point.lon+
+"&timezone=Europe%2FBerlin"+
+"&forecast_days=14"+
+"&current=precipitation,temperature_2m,wind_speed_10m"+
+"&hourly=precipitation"+
+"&daily=precipitation_sum,precipitation_probability_max,temperature_2m_max,temperature_2m_min";
+
+try{
+
+const r=
+await fetch(
+url,
+{cache:"no-store"}
+);
+
+if(!r.ok)return null;
+
+return await r.json();
+
+}catch{
+
+return null;
+
+}
+
+}
+
+
+async function allWeather(){
+
+const result={};
+
+await Promise.all(
+
+WEATHER_POINTS.map(
+async p=>{
+
+result[p.name]=
+await weatherPoint(p);
+
+}
+)
+
+);
+
+return result;
+
+}
+
+
+/* =========================================================
+   NIEDERSCHLAG
+========================================================= */
+
+function precipitationFactor(
+weather
+){
+
+let values=[];
+
+for(const name of Object.keys(weather)){
+
+const w=weather[name];
+
+if(
+!w||
+!w.daily||
+!Array.isArray(
+w.daily.precipitation_sum
+)
+)continue;
+
+const three=
+w.daily.precipitation_sum
+.slice(0,3)
+.reduce(
+(a,b)=>a+num(b),
+0
+);
+
+if(Number.isFinite(three))
+values.push(three);
+
+}
+
+
+if(!values.length){
+
+return{
+score:50,
+average3:0,
+max3:0
+};
+
+}
+
+
+const average=
+values.reduce(
+(a,b)=>a+b,
+0
+)/values.length;
+
+const max=
+Math.max(...values);
+
+
+/*
+   Das ist ein Belastungsindex,
+   keine direkte cm-Umrechnung.
+*/
+
+let score=
+clamp(
+20+
+average*3+
+max*1.5,
+5,
+95
+);
+
+
+return{
+
+score,
+average3:average,
+max3:max
+
+};
+
+}
+
+
+/* =========================================================
+   OFFIZIELLE PROGNOSE PUNKT SUCHEN
+========================================================= */
+
+function forecastAt(
+forecast,
+hours
+){
+
+if(!forecast.length)
+return null;
+
+const target=
+Date.now()+
+hours*3600000;
+
+let best=null;
+let diff=Infinity;
+
+for(const x of forecast){
+
+const t=
+new Date(x.timestamp).getTime();
+
+const d=
+Math.abs(t-target);
+
+if(d<diff){
+
+diff=d;
+best=x;
+
+}
+
+}
+
+return best;
+
+}
+
+
+/* =========================================================
+   EIGENES TRENDMODELL
+========================================================= */
+
+function ownModel(
+current,
+historyTrend,
+wave,
+rain,
+hours
+){
+
+if(current===null)
+return null;
+
+
+/*
+   Eigenmodell.
+
+   Wichtig:
+   Dieses Modell ersetzt NICHT die amtliche Prognose.
+
+   Es erzeugt ein unabhängiges Plausibilitäts-Szenario
+   aus beobachteten Trends und Niederschlagsbelastung.
+*/
+
+
+const t24=
+historyTrend.change24||0;
+
+const t48=
+historyTrend.change48||0;
+
+const persistence=
+(
+t24*0.55+
+(t48/2)*0.30+
+(t24-t48/2)*0.15
+);
+
+
+/*
+   upstream signal
+*/
+
+const waveEffect=
+(
+wave.score-50
+)/50;
+
+
+/*
+   Niederschlag wird bewusst stark gedämpft.
+
+   Wir behaupten nicht, dass z.B. 10 mm Regen
+   direkt X cm Pegelanstieg erzeugen.
+*/
+
+const rainEffect=
+(
+rain.score-50
+)/100;
+
+
+/*
+   Zukunftsdämpfung.
+*/
+
+const timeFactor=
+hours<=24
+?1
+:hours<=48
+?0.75
+:0.55;
+
+
+/*
+   Trendkomponente.
+*/
+
+const trendComponent=
+persistence*
+timeFactor;
+
+
+/*
+   zusätzlicher upstream Hinweis.
+*/
+
+const waveComponent=
+waveEffect*
+3*
+(hours/24);
+
+
+/*
+   Wetterkomponente klein halten.
+*/
+
+const weatherComponent=
+rainEffect*
+2*
+(hours/24);
+
+
+/*
+   Eigenmodell.
+*/
+
+return current+
+trendComponent+
+waveComponent+
+weatherComponent;
+
+}
+
+
+/* =========================================================
+   AMTLICH + EIGENMODELL KOMBINIEREN
+========================================================= */
+
+function combinedForecast(
+current,
+official,
+own,
+hours
+){
+
+if(current===null)
+return null;
+
+
+/*
+   Wenn keine amtliche Prognose vorhanden ist,
+   verwenden wir das Eigenmodell.
+
+   Sobald eine amtliche Prognose vorhanden ist,
+   bekommt sie deutlich mehr Gewicht.
+*/
+
+if(official===null){
+
+return{
+
+value:own,
+official:null,
+own:own,
+agreement:null,
+source:"eigene Trendanalyse"
+
+};
+
+}
+
+
+const officialValue=
+num(official.value);
+
+if(officialValue===null){
+
+return{
+
+value:own,
+official:null,
+own:own,
+agreement:null,
+source:"eigene Trendanalyse"
+
+};
+
+}
+
+
+/*
+   Abweichung zwischen Modell und amtlicher Prognose.
+*/
+
+const difference=
+Math.abs(
+officialValue-own
+);
+
+
+/*
+   Gewichtung:
+
+   24h:
+   amtlich sehr stark
+
+   48h:
+   amtlich stark
+
+   72h:
+   amtlich weiterhin dominant,
+   aber eigenes Signal stärker berücksichtigt.
+*/
+
+let officialWeight=
+hours<=24
+?0.90
+:hours<=48
+?0.85
+:0.78;
+
+let ownWeight=
+1-officialWeight;
+
+
+/*
+   Bei großer Abweichung wird NICHT blind
+   das Eigenmodell übernommen.
+
+   Stattdessen bleibt die amtliche Prognose
+   führend und die Unsicherheit wird erhöht.
+*/
+
+const value=
+officialValue*
+officialWeight+
+own*
+ownWeight;
+
+
+let agreement=
+100-
+difference*5;
+
+agreement=
+clamp(
+agreement,
+5,
+100
+);
+
+
+return{
+
+value,
+official:officialValue,
+own,
+agreement,
+source:
+"offizielle Prognose + Trendmodell"
+
+};
+
+}
+
+
+/* =========================================================
+   PROGNOSEUNSICHERHEIT
+========================================================= */
+
+function uncertainty(
+official,
+agreement,
+hours
+){
+
+let score=70;
+
+
+if(official){
+
+const p10=
+num(official.percentile10);
+
+const p90=
+num(official.percentile90);
+
+if(
+p10!==null &&
+p90!==null
+){
+
+const spread=
+Math.abs(
+p90-p10
+);
+
+if(spread<=10)
+score=90;
+
+else if(spread<=25)
+score=70;
+
+else if(spread<=45)
+score=50;
+
+else
+score=30;
+
+}
+
+else{
+
+score=
+hours<=24
+?75
+:hours<=48
+?60
+:45;
+
+}
+
+}
+else{
+
+score=35;
+
+}
+
+
+if(agreement!==null){
+
+score=
+score*0.7+
+agreement*0.3;
+
+}
+
+
+if(hours>=72)
+score-=10;
+
+
+score=
+clamp(
+Math.round(score),
+5,
+95
+);
+
+
+let label;
+
+if(score>=80)
+label="hoch";
+
+else if(score>=60)
+label="mittel";
+
+else
+label="erhöht";
+
+
+return{
+
+score,
+label
+
+};
+
+}
+
+
+/* =========================================================
+   PEGELKETTE DARSTELLEN
+========================================================= */
+
+function renderGauges(
+stations,
+current,
+trends
+){
+
+const container=
+document.getElementById(
+"gauges"
+);
+
+container.innerHTML="";
+
+
+for(const name of MAIN_GAUGES){
+
+const value=
+current[name] &&
+num(current[name].value)!==null
+?num(current[name].value)
+:null;
+
+
+const trend=
+trends[name]||{};
+
+let label="–";
+
+if(trend.change24>1)
+label="steigend";
+
+else if(trend.change24<-1)
+label="fallend";
+
+else if(
+Math.abs(trend.change24)<=1
+)
+label="stabil";
+
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className="gauge";
+
+div.innerHTML=`
+
+<div class="gauge-name">
+${name}
+</div>
+
+<div class="gauge-value">
+${cm(value)}
+</div>
+
+<div class="gauge-trend">
+24h: ${label}
+${
+value!==null
+?" · "+(trend.change24>0?"+":"")+Math.round(trend.change24)+" cm"
+:""
+}
+</div>
+
+`;
+
+container.appendChild(div);
+
+}
+
+}
+
+
+/* =========================================================
+   WETTER DARSTELLEN
+========================================================= */
+
+function renderWeather(
+weather
+){
+
+const local=
+weather["Oberwinter"];
+
+if(local&&local.current){
+
+document.getElementById(
+"temperature"
+).textContent=
+Math.round(
+local.current.temperature_2m
+)+" °C";
+
+document.getElementById(
+"rainCurrent"
+).textContent=
+Number(
+local.current.precipitation
+).toFixed(1)+" mm";
+
+document.getElementById(
+"wind"
+).textContent=
+Math.round(
+local.current.wind_speed_10m
+)+" km/h";
+
+}
+
+
+/*
+   Wetterpunkte
+*/
+
+const container=
+document.getElementById(
+"weatherPoints"
+);
+
+container.innerHTML="";
+
+
+for(const point of WEATHER_POINTS){
+
+const w=
+weather[point.name];
+
+if(
+!w||
+!w.daily
+)continue;
+
+const rain=
+w.daily
+.precipitation_sum
+.slice(0,3)
+.reduce(
+(a,b)=>a+num(b),
+0
+);
+
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"weather-point";
+
+div.innerHTML=`
+
+<div class="weather-point-name">
+${point.name}
+</div>
+
+<div class="weather-point-value">
+${rain.toFixed(1)} mm
+</div>
+
+<div class="day-rain">
+erwartet · nächste 3 Tage
+</div>
+
+`;
+
+container.appendChild(div);
+
+}
+
+
+renderDays(
+local,
+"days7",
+7
+);
+
+renderDays(
+local,
+"days14",
+14
+);
+
+}
+
+
+function renderDays(
+weather,
+elementId,
+count
+){
+
+const container=
+document.getElementById(
+elementId
+);
+
+container.innerHTML="";
+
+
+if(
+!weather||
+!weather.daily||
+!weather.daily.time
+){
+
+container.innerHTML=
+"<div class='loading'>Keine Wetterdaten verfügbar.</div>";
+
+return;
+
+}
+
+
+const n=
+Math.min(
+count,
+weather.daily.time.length
+);
+
+
+for(let i=0;i<n;i++){
+
+const d=
+new Date(
+weather.daily.time[i]+
+"T12:00:00"
+);
+
+const max=
+Math.round(
+weather.daily.temperature_2m_max[i]
+);
+
+const min=
+Math.round(
+weather.daily.temperature_2m_min[i]
+);
+
+const rain=
+Number(
+weather.daily.precipitation_sum[i]
+).toFixed(1);
+
+const probability=
+weather.daily
+.precipitation_probability_max
+?weather.daily
+.precipitation_probability_max[i]
+:null;
+
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className="day";
+
+div.innerHTML=`
+
+<div class="day-date">
+${d.toLocaleDateString(
+"de-DE",
+{
+weekday:"short",
+day:"2-digit",
+month:"2-digit"
+}
+)}
+</div>
+
+<div class="day-temp">
+${max}° / ${min}°
+</div>
+
+<div class="day-rain">
+${rain} mm
+</div>
+
+${
+probability!==null
+?`
+<div class="day-rain">
+Regen ${Math.round(probability)}%
+</div>
+`
+:""
+}
+
+`;
+
+container.appendChild(div);
+
+}
+
+}
+
+
+/* =========================================================
+   FAKTOREN
+========================================================= */
+
+function renderFactors(
+trend,
+wave,
+rain,
+agreement
+){
+
+const t=
+clamp(
+50+
+trend.change24*8,
+5,
+95
+);
+
+document.getElementById(
+"bTrend"
+).style.width=t+"%";
+
+document.getElementById(
+"fTrend"
+).textContent=
+trend.change24>1
+?"steigend"
+:trend.change24<-1
+?"fallend"
+:"stabil";
+
+
+document.getElementById(
+"bWave"
+).style.width=
+wave.score+"%";
+
+document.getElementById(
+"fWave"
+).textContent=
+wave.label;
+
+
+document.getElementById(
+"bRain"
+).style.width=
+rain.score+"%";
+
+document.getElementById(
+"fRain"
+).textContent=
+rain.average3.toFixed(1)+
+" mm Ø / 3 Tage";
+
+
+document.getElementById(
+"bAgreement"
+).style.width=
+agreement+"%";
+
+document.getElementById(
+"fAgreement"
+).textContent=
+Math.round(agreement)+"%";
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function drawChart(
+current,
+forecast
+){
+
+const canvas=
+document.getElementById(
+"chart"
+);
+
+const width=
+canvas.clientWidth;
+
+const height=310;
+
+const ratio=
+window.devicePixelRatio||1;
+
+canvas.width=
+width*ratio;
+
+canvas.height=
+height*ratio;
+
+const ctx=
+canvas.getContext("2d");
+
+ctx.scale(
+ratio,
+ratio
+);
+
+ctx.clearRect(
+0,
+0,
+width,
+height
+);
+
+
+const points=[];
+
+
+if(current!==null){
+
+points.push({
+label:"Jetzt",
+value:current
+});
+
+}
+
+
+for(const p of forecast){
+
+if(p&&p.value!==null){
+
+points.push(p);
+
+}
+
+}
+
+
+if(points.length<2){
+
+ctx.font=
+"14px Arial";
+
+ctx.fillStyle=
+"#71808a";
+
+ctx.fillText(
+"Keine ausreichenden Prognosedaten verfügbar.",
+20,
+40
+);
+
+return;
+
+}
+
+
+const values=
+points.map(
+p=>p.value
+);
+
+const min=
+Math.min(...values)-5;
+
+const max=
+Math.max(...values)+5;
+
+
+const left=45;
+const right=15;
+const top=20;
+const bottom=40;
+
+const cw=
+width-left-right;
+
+const ch=
+height-top-bottom;
+
+
+function x(i){
+
+return left+
+(
+i/(points.length-1)
+)*cw;
+
+}
+
+function y(v){
+
+return top+
+(
+1-
+(v-min)/(max-min)
+)*ch;
+
+}
+
+
+/*
+   Gitter
+*/
+
+ctx.font=
+"11px Arial";
+
+ctx.fillStyle=
+"#71808a";
+
+
+for(let i=0;i<=4;i++){
+
+const v=
+min+
+(max-min)*i/4;
+
+const yy=
+y(v);
+
+ctx.beginPath();
+
+ctx.moveTo(
+left,
+yy
+);
+
+ctx.lineTo(
+width-right,
+yy
+);
+
+ctx.strokeStyle=
+"#e5eaee";
+
+ctx.lineWidth=1;
+
+ctx.stroke();
+
+ctx.fillText(
+Math.round(v)+" cm",
+3,
+yy-3
+);
+
+}
+
+
+/*
+   Linie
+*/
+
+ctx.beginPath();
+
+points.forEach(
+(p,i)=>{
+
+if(i===0)
+ctx.moveTo(
+x(i),
+y(p.value)
+);
+
+else
+ctx.lineTo(
+x(i),
+y(p.value)
+);
+
+}
+);
+
+ctx.strokeStyle=
+"#176b98";
+
+ctx.lineWidth=3;
+
+ctx.stroke();
+
+
+/*
+   Punkte + Werte
+*/
+
+points.forEach(
+(p,i)=>{
+
+ctx.beginPath();
+
+ctx.arc(
+x(i),
+y(p.value),
+5,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle=
+"#176b98";
+
+ctx.fill();
+
+
+ctx.font=
+"11px Arial";
+
+ctx.fillStyle=
+"#596771";
+
+ctx.fillText(
+p.label,
+x(i)-15,
+height-12
+);
+
+}
+);
+
+}
+
+
+/* =========================================================
+   HAUPTUPDATE
+========================================================= */
+
+async function update(){
+
+try{
+
+document.getElementById(
+"updated"
+).textContent=
+"Aktualisiere …";
+
+
+/*
+   Stationen
+*/
+
+const stationList=
+await loadStations();
+
+const stations={};
+
+
+for(const name of MAIN_GAUGES){
+
+stations[name]=
+findStation(
+stationList,
+name
+);
+
+}
+
+
+/*
+   aktuelle Pegel
+*/
+
+const current={};
+
+
+/*
+   Historie
+*/
+
+const history={};
+
+
+await Promise.all(
+
+MAIN_GAUGES.map(
+async name=>{
+
+current[name]=
+await currentGauge(
+stations[name]
+);
+
+history[name]=
+await historyGauge(
+stations[name]
+);
+
+}
+)
+
+);
+
+
+/*
+   Wetter
+*/
+
+const weather=
+await allWeather();
+
+
+/*
+   Trends
+*/
+
+const trends=
+buildGaugeTrend(
+current,
+history
+);
+
+
+/*
+   Oberwintertrend
+*/
+
+const owTrend=
+trends.OBERWINTER;
+
+
+/*
+   Wasserwelle
+*/
+
+const wave=
+waveSignal(
+current.OBERWINTER &&
+num(current.OBERWINTER.value)!==null
+?num(current.OBERWINTER.value)
+:null,
+trends
+);
+
+
+/*
+   Niederschlag
+*/
+
+const rain=
+precipitationFactor(
+weather
+);
+
+
+/*
+   offizielle Prognose
+*/
+
+const official=
+await officialForecast(
+stations.OBERWINTER
+);
+
+
+/*
+   Eigenmodelle
+*/
+
+const own24=
+ownModel(
+current.OBERWINTER &&
+num(current.OBERWINTER.value)!==null
+?num(current.OBERWINTER.value)
+:null,
+owTrend,
+wave,
+rain,
+24
+);
+
+const own48=
+ownModel(
+current.OBERWINTER &&
+num(current.OBERWINTER.value)!==null
+?num(current.OBERWINTER.value)
+:null,
+owTrend,
+wave,
+rain,
+48
+);
+
+const own72=
+ownModel(
+current.OBERWINTER &&
+num(current.OBERWINTER.value)!==null
+?num(current.OBERWINTER.value)
+:null,
+owTrend,
+wave,
+rain,
+72
+);
+
+
+/*
+   amtliche Werte
+*/
+
+const o24=
+forecastAt(
+official,
+24
+);
+
+const o48=
+forecastAt(
+official,
+48
+);
+
+const o72=
+forecastAt(
+official,
+72
+);
+
+
+/*
+   Kombination
+*/
+
+const f24=
+combinedForecast(
+num(current.OBERWINTER?.value),
+o24,
+own24,
+24
+);
+
+const f48=
+combinedForecast(
+num(current.OBERWINTER?.value),
+o48,
+own48,
+48
+);
+
+const f72=
+combinedForecast(
+num(current.OBERWINTER?.value),
+o72,
+own72,
+72
+);
+
+
+/*
+   aktuelle Anzeige
+*/
+
+const currentValue=
+num(
+current.OBERWINTER?.value
+);
+
+
+document.getElementById(
+"currentLevel"
+).textContent=
+cm(currentValue);
+
+
+document.getElementById(
+"currentInfo"
+).textContent=
+current.OBERWINTER
+?.timestamp
+?
+"Letzte Messung: "+
+time(
+current.OBERWINTER.timestamp
+)
+:
+"Keine aktuelle Messung verfügbar.";
+
+
+/*
+   Prognose
+*/
+
+renderForecastBox(
+f24,
+currentValue,
+"p24",
+"c24",
+"s24"
+);
+
+renderForecastBox(
+f48,
+currentValue,
+"p48",
+"c48",
+"s48"
+);
+
+renderForecastBox(
+f72,
+currentValue,
+"p72",
+"c72",
+"s72"
+);
+
+
+/*
+   Faktoren
+*/
+
+const agreementValues=
+[
+f24?.agreement,
+f48?.agreement,
+f72?.agreement
+]
+.filter(
+x=>x!==null&&x!==undefined
+);
+
+
+const agreement=
+agreementValues.length
+?
+agreementValues.reduce(
+(a,b)=>a+b,
+0
+)/agreementValues.length
+:50;
+
+
+renderFactors(
+owTrend,
+wave,
+rain,
+agreement
+);
+
+
+/*
+   Sicherheit
+*/
+
+const u24=
+uncertainty(
+o24,
+f24?.agreement,
+24
+);
+
+const u48=
+uncertainty(
+o48,
+f48?.agreement,
+48
+);
+
+const u72=
+uncertainty(
+o72,
+f72?.agreement,
+72
+);
+
+
+const finalScore=
+Math.round(
+u24.score*.45+
+u48.score*.30+
+u72.score*.25
+);
+
+
+let label;
+
+if(finalScore>=80)
+label="hoch";
+
+else if(finalScore>=60)
+label="mittel";
+
+else
+label="erhöht";
+
+
+document.getElementById(
+"confidenceValue"
+).textContent=
+label;
+
+
+document.getElementById(
+"confidenceText"
+).textContent=
+"Gesamteinschätzung der Prognosesicherheit: "+
+label+
+". Berücksichtigt werden die verfügbare amtliche Prognose, "+
+"deren Unsicherheit, die Pegelentwicklung der Rhein-Pegelkette "+
+"und die Niederschlagsentwicklung.";
+
+
+/*
+   Pegel anzeigen
+*/
+
+renderGauges(
+stations,
+current,
+trends
+);
+
+
+/*
+   Wetter
+*/
+
+renderWeather(
+weather
+);
+
+
+/*
+   Chart
+*/
+
+drawChart(
+currentValue,
+[
+{
+label:"+24 h",
+value:f24?.value??null
+},
+{
+label:"+48 h",
+value:f48?.value??null
+},
+{
+label:"+72 h",
+value:f72?.value??null
+}
+]
+);
+
+
+/*
+   Zeit
+*/
+
+document.getElementById(
+"updated"
+).textContent=
+time(
+new Date()
+);
+
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById(
+"updated"
+).textContent=
+"Fehler";
+
+document.getElementById(
+"currentInfo"
+).innerHTML=
+"<div class='error'>"+
+"Die Daten konnten momentan nicht vollständig geladen werden. "+
+"Bitte später erneut versuchen."+
+"</div>";
+
+}
+
+}
+
+
+/* =========================================================
+   PROGNOSEBOX
+========================================================= */
+
+function renderForecastBox(
+forecast,
+current,
+valueId,
+changeId,
+sourceId
+){
+
+if(!forecast){
+
+document.getElementById(
+valueId
+).textContent="–";
+
+document.getElementById(
+changeId
+).textContent=
+"keine Prognose verfügbar";
+
+document.getElementById(
+sourceId
+).textContent=
+"–";
+
+return;
+
+}
+
+
+document.getElementById(
+valueId
+).textContent=
+cm(
+forecast.value
+);
+
+
+if(
+current!==null&&
+forecast.value!==null
+){
+
+const diff=
+forecast.value-current;
+
+document.getElementById(
+changeId
+).textContent=
+(diff>0?"+":"")+
+Math.round(diff)+
+" cm gegenüber aktuell";
+
+}
+
+
+document.getElementById(
+sourceId
+).textContent=
+forecast.source+
+(
+forecast.agreement!==null
+?
+" · Modellübereinstimmung "+
+Math.round(forecast.agreement)+"%"
+:""
+);
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+update();
+
+
+/*
+   Alle 15 Minuten aktualisieren.
+*/
+
+setInterval(
+update,
+15*60*1000
+);
+
+
+/*
+   Bei Größenänderung neu zeichnen.
+*/
+
+window.addEventListener(
+"resize",
+()=>{
+update();
+}
+);
 
 </script>
 
 </body>
-
 </html>
